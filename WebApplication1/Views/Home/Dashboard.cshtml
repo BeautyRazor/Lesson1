@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+@*<div id="#Dashboard" style="position: absolute; left: 0; right: 0; top:0; bottom:0;">*@
+
+    @Html.DevExpress().Dashboard(settings =>
+{
+    settings.Name = "Dashboard";
+}).GetHtml()
+    @*</div>*@
