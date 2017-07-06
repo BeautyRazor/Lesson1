@@ -1,6 +1,6 @@
 # Add any directories, files, or patterns you don't want to be tracked by version control
 packages/**/*.*
-WebApplication1/bin/**/*.*
-WebApplication1/obj/**/*.*
+**/bin/**/*.*
+**/obj/**/*.*
 **/.vs/**/*.*
 **/*.user
