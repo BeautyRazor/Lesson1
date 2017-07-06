@@ -38,6 +38,10 @@ namespace WebApplication1
             //aspx.SetDataSourceStorage(dataSourceStorage);
             DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/"));
             DashboardConfigurator.Default.SetDataSourceStorage(dataSourceStorage);
+            /*DevExpress.DashboardExport.DashboardExporter export = null;
+            //DevExpress.DashboardCommon.
+            export.Export()
+            */
         }
     }
 }

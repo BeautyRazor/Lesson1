@@ -13,21 +13,26 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Fullscreen()
+        {
+            return View();
+        }
+
+        public ActionResult Preview()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Manager()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
 
-        public ActionResult Dashboard()
+        public ActionResult Manual()
         {
             ViewBag.Message = "Dashboard";
 
