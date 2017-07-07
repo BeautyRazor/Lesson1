@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="New Dashboard" />
+  <DataSources>
+    <ExcelDataSource Name="Data Source 1" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards\sof16.csv" ComponentName="excelDataSource1">
+      <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
+      <Schema />
+      <ResultSchema>
+        <View>
+          <Field Name="id" Type="Double" />
+          <Field Name="collector" Type="String" />
+          <Field Name="country" Type="String" />
+          <Field Name="un_subregion" Type="String" />
+          <Field Name="so_region" Type="String" />
+          <Field Name="age_range" Type="String" />
+          <Field Name="age_midpoint" Type="Double" />
+          <Field Name="gender" Type="String" />
+          <Field Name="self_identification" Type="String" />
+          <Field Name="occupation" Type="String" />
+          <Field Name="occupation_group" Type="String" />
+          <Field Name="experience_range" Type="String" />
+          <Field Name="experience_midpoint" Type="Double" />
+          <Field Name="salary_range" Type="String" />
+          <Field Name="salary_midpoint" Type="Double" />
+          <Field Name="big_mac_index" Type="String" />
+          <Field Name="tech_do" Type="String" />
+          <Field Name="tech_want" Type="String" />
+          <Field Name="aliens" Type="String" />
+          <Field Name="programming_ability" Type="Double" />
+          <Field Name="employment_status" Type="String" />
+          <Field Name="industry" Type="String" />
+          <Field Name="company_size_range" Type="String" />
+          <Field Name="team_size_range" Type="String" />
+          <Field Name="women_on_team" Type="Double" />
+          <Field Name="remote" Type="String" />
+          <Field Name="job_satisfaction" Type="String" />
+          <Field Name="job_discovery" Type="String" />
+          <Field Name="dev_environment" Type="String" />
+          <Field Name="commit_frequency" Type="String" />
+          <Field Name="hobby" Type="String" />
+          <Field Name="dogs_vs_cats" Type="String" />
+          <Field Name="desktop_os" Type="String" />
+          <Field Name="unit_testing" Type="String" />
+          <Field Name="rep_range" Type="String" />
+          <Field Name="visit_frequency" Type="String" />
+          <Field Name="why_learn_new_tech" Type="String" />
+          <Field Name="education" Type="String" />
+          <Field Name="open_to_new_job" Type="String" />
+          <Field Name="new_job_value" Type="String" />
+          <Field Name="job_search_annoyance" Type="String" />
+          <Field Name="interview_likelihood" Type="Double" />
+          <Field Name="how_to_improve_interview_process" Type="String" />
+          <Field Name="star_wars_vs_star_trek" Type="String" />
+          <Field Name="agree_tech" Type="String" />
+          <Field Name="agree_notice" Type="String" />
+          <Field Name="agree_problemsolving" Type="String" />
+          <Field Name="agree_diversity" Type="String" />
+          <Field Name="agree_adblocker" Type="String" />
+          <Field Name="agree_alcohol" Type="String" />
+          <Field Name="agree_loveboss" Type="String" />
+          <Field Name="agree_nightcode" Type="String" />
+          <Field Name="agree_legacy" Type="String" />
+          <Field Name="agree_mars" Type="String" />
+          <Field Name="important_variety" Type="String" />
+          <Field Name="important_control" Type="String" />
+          <Field Name="important_sameend" Type="String" />
+          <Field Name="important_newtech" Type="String" />
+          <Field Name="important_buildnew" Type="String" />
+          <Field Name="important_buildexisting" Type="String" />
+          <Field Name="important_promotion" Type="String" />
+          <Field Name="important_companymission" Type="String" />
+          <Field Name="important_wfh" Type="String" />
+          <Field Name="important_ownoffice" Type="String" />
+          <Field Name="developer_challenges" Type="String" />
+          <Field Name="why_stack_overflow" Type="String" />
+        </View>
+      </ResultSchema>
+    </ExcelDataSource>
+  </DataSources>
+  <Items>
+    <Chart ComponentName="chartDashboardItem1" Name="Chart 1" DataSource="excelDataSource1">
+      <DataItems>
+        <Measure DataMember="agree_alcohol" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="agree_alcohol" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Weight="100">
+      <LayoutItem DashboardItem="chartDashboardItem1" Weight="100" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

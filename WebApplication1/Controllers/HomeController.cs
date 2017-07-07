@@ -1,7 +1,10 @@
-﻿using System;
+﻿using DevExpress.DashboardWeb;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace WebApplication1.Controllers
@@ -13,18 +16,39 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult Fullscreen()
+        public ActionResult Fullscreen(string dashboardid = "dashboard1")
         {
-            return View();
+            var goToFullscreen = new Models.Fullscreen();
+
+            goToFullscreen.currentDashboardId = dashboardid;
+
+            return View(goToFullscreen);
         }
 
         public ActionResult Preview()
         {
             ViewBag.Message = "Your application description page.";
-            
-            
 
-            return View();
+            var dasboards = new Models.Preview();
+            
+            string dashboardsPath = @"~\App_Data";
+            string thumbnailsPath = @"~\Content\img";
+
+            var serviceTest = new Services.StreamTest();
+
+            DashboardFileStorage storage = new DashboardFileStorage(dashboardsPath);
+
+            serviceTest.Export(storage, thumbnailsPath);
+
+            dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(@"~\App_Data\Dashboards\")).GetFiles().Length;
+            dasboards.Dashboards = (storage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
+
+            return View(dasboards);
+        }
+
+        private object DirectoryInfo(string v)
+        {
+            throw new NotImplementedException();
         }
 
         public ActionResult Manager()
