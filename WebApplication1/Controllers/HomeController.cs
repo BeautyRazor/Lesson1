@@ -32,13 +32,13 @@ namespace WebApplication1.Controllers
             var dasboards = new Models.Preview();
             
             string dashboardsPath = @"~\App_Data";
-            string thumbnailsPath = @"~\Content\img";
+            //string thumbnailsPath = @"~\Content\img";
 
-            var serviceTest = new Services.StreamTest();
+            //var serviceTest = new Services.StreamTest();
 
             DashboardFileStorage storage = new DashboardFileStorage(dashboardsPath);
 
-            serviceTest.Export(storage, thumbnailsPath);
+            //serviceTest.Export(storage, thumbnailsPath);
 
             dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(@"~\App_Data\Dashboards\")).GetFiles().Length;
             dasboards.Dashboards = (storage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
@@ -63,6 +63,21 @@ namespace WebApplication1.Controllers
             ViewBag.Message = "Dashboard";
 
             return View();
+        }
+
+        public ActionResult Image(string id)
+        {
+            string thumbnailsPath = @"~\Content\img";
+
+            var serviceTest = new Services.StreamTest();
+
+            var extension = "png";
+
+            serviceTest.Export(thumbnailsPath, id, extension);
+
+            var dir = Server.MapPath("/Content/img");
+            var path = Path.Combine(dir, id + "." + extension); //validate the path for security or use other means to generate the path.
+            return base.File(path, "image/" + extension);
         }
     }
 }

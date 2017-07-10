@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Security.Cryptography;
 using System.Web.Hosting;
 
 namespace WebApplication1.Services
@@ -20,32 +21,47 @@ namespace WebApplication1.Services
                 file.Delete();
             }
         }
+        static object lockObj = new object();
 
-        public List<long> Export(DashboardFileStorage dashboardStorage, string thumbnailsPath)
-        { 
+        public void Export(string thumbnailsPath, string dashboardID, string extension)
+        {
             ASPxDashboardExporter exporter = new ASPxDashboardExporter(DashboardConfigurator.Default);
 
             var path = HostingEnvironment.MapPath(thumbnailsPath);
-            var dashboards = (dashboardStorage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
 
-            DeleteUnusefulFiles(path);
-
-            List<long> streamList = new List<long>();
-
-            for (int i = 0; i < dashboards.Count; i++)
+            lock (lockObj)
             {
-                string fullPath = string.Format(@"{0}\{1}.png", path, dashboards[i].ID);
+                string fullPath = string.Format(@"{0}\{1}.{2}", path, dashboardID, extension);
                 using (FileStream fs = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
-                    exporter.ExportToImage(dashboards[i].ID, fs, new Size(500, 500), null, new DashboardImageExportOptions()
+                    switch (extension)
                     {
-                        Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Png
-                    });
-                    streamList.Add(fs.Length);
+                        case "png":
+                            exporter.ExportToImage(dashboardID, fs, new Size(512, 288), null, new DashboardImageExportOptions()
+                            {
+                                Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Png
+                            });
+                            break;
+                        case "jpg":
+                        case "jpeg":
+                            exporter.ExportToImage(dashboardID, fs, new Size(512, 288), null, new DashboardImageExportOptions()
+                            {
+                                Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Jpeg
+                            });
+                            break;
+                        case "gif":
+                            exporter.ExportToImage(dashboardID, fs, new Size(512, 288), null, new DashboardImageExportOptions()
+                            {
+                                Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Gif
+                            });
+                            break;
+                        default:
+                            Console.WriteLine("Wrong extension.");
+                            break;
+
+                    }
                 }
             }
-
-            return streamList;
         }
 
     }

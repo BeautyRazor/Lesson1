@@ -90,10 +90,23 @@
         <Argument DefaultId="DataItem1" />
       </Arguments>
     </Treemap>
+    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="excelDataSource1">
+      <DataItems>
+        <Measure DataMember="agree_mars" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="agree_mars" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
   </Items>
   <LayoutTree>
     <LayoutGroup Weight="100">
       <LayoutItem DashboardItem="treemapDashboardItem1" Weight="100" />
+      <LayoutItem DashboardItem="pieDashboardItem1" Weight="100" />
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>

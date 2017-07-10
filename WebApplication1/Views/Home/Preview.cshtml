@@ -6,19 +6,62 @@
 @model WebApplication1.Models.Preview
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+    <script>
+     
+        function imgOnLoad(element) {
+            $(element).closest(".dashboard-thumbl-container").find(".dashboard-thumbl-loading-div").hide(500)
+        }
+    </script>
+
+    @*<script>
+     
+        function check() {
+            document.getElementById('DL') = function () {
+                this.src = this.src;
+            }
+                }
+    </script>*@
+
 </head>
 <body id="body">
-    <div style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap">
-    <h2>Dashboard list</h2>
-        @{
-            foreach (var item in Model.Dashboards)
-            {
-                var extension = ".png";
-                var image = Model.DashboardImagePath + item.ID + extension;
-                <a target="_blank" href="~/Home/Fullscreen?dashboardid=@item.ID">
-                    <img style="border: 4px double black" src=@image alt=@item.ID />
-                </a>
-            }
-        }
+    <div class="text-center">
+       
+        <h2>Dashboard list</h2>
+            @*<img src='~/Content/animation/download.gif' id='DL' />*@
+            
+        
+                <div style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap">
+                   
+                    @{foreach (var item in Model.Dashboards)
+                    {
+                    <div style="position: relative" class="dashboard-thumbl-container p-2">
+                      
+                         <div class="dashboard-thumbl-loading-div" style="position:absolute; left:0;top:0;right:0;bottom:0; z-index:50;">
+                            <img id="@item.ID" load-src="~/Home/Image/@item.ID" src="~/Content/animation/download.gif" alt="@item.ID" />
+                        </div>
+                        <a target="_blank" href="~/Home/Fullscreen?dashboardid=@item.ID">
+                            <img id="@item.ID" onload="imgOnLoad(this)" src="~/Home/Image/@item.ID" width="512" height="288" alt=@item.ID />
+                        </a>
+                    </div>
+                    }
+                    @*<script>
+
+                        var image = new Image();
+                        // важно добавить обработчик события до инициализации загрузки картинки
+                        image.onload = function () {
+                            $('#img-tag')
+                                .css({ 'opacity': 0, 'display': 'none' })
+                                .attr('src', this.src)
+                                .fadeIn();
+                        }
+                        i.src = '~/Home/Image/@item.ID'; // существующее изображение
+
+                        <img src='~/Content/animation/download.gif' id='img-tag'></img>
+                                        </script>*@
+                    }
+                </div>
+                   
     </div>
 </body>
