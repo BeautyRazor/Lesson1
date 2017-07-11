@@ -79,16 +79,18 @@ namespace WebApplication1.Controllers
 
         public ActionResult Image(string id)
         {
-            string thumbnailsPath = @"~\Content\img";
-
-            var serviceTest = new Services.StreamTest();
+            string thumbnailsPath = @"~\Content\img\";
+            string dashboardPath = @"~\App_Data\";
 
             var extension = "png";
 
-            serviceTest.Export(thumbnailsPath, id, extension);
+            var cache = new Services.HashCache();
+
+            var hash = cache.CacheRequest(thumbnailsPath, dashboardPath, id, extension);
 
             var dir = Server.MapPath("/Content/img");
-            var path = Path.Combine(dir, id + "." + extension); //validate the path for security or use other means to generate the path.
+            var path = Path.Combine(dir, id + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
+
             return base.File(path, "image/" + extension);
         }
     }

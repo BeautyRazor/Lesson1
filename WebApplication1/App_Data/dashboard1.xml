@@ -169,10 +169,10 @@
   </Items>
   <LayoutTree>
     <LayoutGroup Weight="100">
-      <LayoutGroup Orientation="Vertical" Weight="107.45043249715235">
+      <LayoutGroup Orientation="Vertical" Weight="129.18092847127548">
         <LayoutItem DashboardItem="choroplethMapDashboardItem1" Weight="107.45043249715235" />
       </LayoutGroup>
-      <LayoutGroup Orientation="Vertical" Weight="120.84611532401345">
+      <LayoutGroup Orientation="Vertical" Weight="99.115619349890324">
         <LayoutGroup Weight="100">
           <LayoutGroup Orientation="Vertical" Weight="100">
             <LayoutGroup Weight="100">

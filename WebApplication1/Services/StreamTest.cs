@@ -23,7 +23,7 @@ namespace WebApplication1.Services
         }
         static object lockObj = new object();
 
-        public void Export(string thumbnailsPath, string dashboardID, string extension)
+        public void Export(string thumbnailsPath, string dashboardID, string extension, string hash)
         {
             ASPxDashboardExporter exporter = new ASPxDashboardExporter(DashboardConfigurator.Default);
 
@@ -31,7 +31,7 @@ namespace WebApplication1.Services
 
             lock (lockObj)
             {
-                string fullPath = string.Format(@"{0}\{1}.{2}", path, dashboardID, extension);
+                string fullPath = string.Format(@"{0}\{1}_{2}.{3}", path, dashboardID, hash, extension);
                 using (FileStream fs = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
                     switch (extension)
@@ -63,6 +63,5 @@ namespace WebApplication1.Services
                 }
             }
         }
-
     }
 }

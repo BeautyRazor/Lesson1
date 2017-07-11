@@ -99,10 +99,23 @@
         </ValueMap>
       </Maps>
     </ChoroplethMap>
+    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="excelDataSource1">
+      <DataItems>
+        <Measure DataMember="agree_adblocker" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="agree_adblocker" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
   </Items>
   <LayoutTree>
     <LayoutGroup Weight="100">
-      <LayoutItem DashboardItem="choroplethMapDashboardItem1" Weight="100" />
+      <LayoutItem DashboardItem="choroplethMapDashboardItem1" Weight="104.20586607636967" />
+      <LayoutItem DashboardItem="pieDashboardItem1" Weight="95.794133923630312" />
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>
