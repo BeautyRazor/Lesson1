@@ -16,11 +16,23 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult Fullscreen(string dashboardid = "dashboard1")
+        public ActionResult Fullscreen(string dashboardid = "dashboard1", string dashboardMode = "viewer")
         {
             var goToFullscreen = new Models.Fullscreen();
 
             goToFullscreen.currentDashboardId = dashboardid;
+            switch (dashboardMode)
+            {
+                case "designer":
+                    goToFullscreen.currentDashboardMode = WorkingMode.Designer;
+                    break;
+                case "viewer":
+                    goToFullscreen.currentDashboardMode = WorkingMode.ViewerOnly;
+                    break;
+
+                default:
+                    break;
+            }
 
             return View(goToFullscreen);
         }

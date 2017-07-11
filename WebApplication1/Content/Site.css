@@ -21,3 +21,125 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.container-overlay {
+    position: relative;
+    width: 100%;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: white;
+}
+
+.overlay-manage {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+  
+}
+
+.overlay-button-top-right {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    height: 30%;
+    width: 30%;
+    opacity: 1;
+    transition: .5s ease;
+    background-color: dodgerblue;
+    border-radius: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.overlay-button-top-left {
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    height: 30%;
+    width: 30%;
+    opacity: 1;
+    transition: .5s ease;
+    background-color: dodgerblue;
+    border-radius: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.overlay-button-bottom-right {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+    height: 30%;
+    width: 30%;
+    opacity: 1;
+    transition: .5s ease;
+    background-color: dodgerblue;
+    border-radius: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.overlay-button-bottom-left {
+    position: absolute;
+    bottom: 3%;
+    left: 3%;
+    height: 30%;
+    width: 30%;
+    opacity: 1;
+    transition: .5s ease;
+    background-color: dodgerblue;
+    border-radius: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.icon {
+    position: relative;
+    top: calc(50% - 20px);
+    width: inherit;
+}
+
+.container-overlay:hover .overlay {
+    opacity: 0.8;
+}
+
+.container-overlay:hover .overlay-manage {
+    opacity: 1;
+}
+
+
+.text {
+    color: black;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.shadow-div {
+    margin: auto;
+    position: relative;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 2%;
+    margin-bottom: 2%;
+}

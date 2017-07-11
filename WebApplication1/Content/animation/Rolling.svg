@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="lds-rolling" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" width="200px"  height="200px" >
+    <circle fill="none" stroke="#eca611" stroke-dasharray="164.934, 56.9779" stroke-width="12" cx="50" cy="50" r="35" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.color}}" ng-attr-stroke-dasharray="{{config.dasharray}}" ng-attr-r="{{config.radius}}">
+      <animateTransform type="rotate" values="0 50 50;360 50 50" repeatCount="indefinite" keyTimes="0;1" dur="1s" calcMode="linear" begin="0s" attributeName="transform" />
+    </circle>
+  </svg>
