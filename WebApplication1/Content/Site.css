@@ -22,6 +22,8 @@ textarea {
     max-width: 280px;
 }
 
+.download-animation{}
+
 .container-overlay {
     position: relative;
     width: 100%;
@@ -85,36 +87,11 @@ textarea {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.overlay-button-bottom-right {
-    position: absolute;
-    bottom: 3%;
-    right: 3%;
-    height: 30%;
-    width: 30%;
-    opacity: 1;
-    transition: .5s ease;
-    background-color: dodgerblue;
-    border-radius: 200px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.overlay-button-bottom-left {
-    position: absolute;
-    bottom: 3%;
-    left: 3%;
-    height: 30%;
-    width: 30%;
-    opacity: 1;
-    transition: .5s ease;
-    background-color: dodgerblue;
-    border-radius: 200px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
 .icon {
     position: relative;
     top: calc(50% - 20px);
     width: inherit;
+    fill: green;
 }
 
 .container-overlay:hover .overlay {
@@ -125,6 +102,23 @@ textarea {
     opacity: 1;
 }
 
+.overlay-button-top-right:hover,
+.overlay-button-top-left:hover {
+    background-color: darkblue;
+    box-shadow: 
+        0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 10px rgba(0, 0, 0, 0.19);
+    transform: translateY(-5px);
+}
+
+    .overlay-button-top-left:hover #Edit,
+    .overlay-button-top-right:hover #View {
+        fill: white;
+    }
+
+.overlay-button-top-left:hover {
+    background-color: darkblue;
+}
 
 .text {
     color: black;
