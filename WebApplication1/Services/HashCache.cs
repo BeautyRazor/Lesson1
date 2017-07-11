@@ -14,15 +14,14 @@ namespace WebApplication1.Services
         {
             string newFile = dashboardPath + dashboardID + "." + "xml";
             string hash = newFile.GetHashCode().ToString();
+
             string exFile = HostingEnvironment.MapPath(thumbnailsPath);
-
-            var directory = new DirectoryInfo(exFile).GetFiles();
-
 
             newFile = HostingEnvironment.MapPath(thumbnailsPath + dashboardID + "_" + hash + "." + extension);
             
             if (!File.Exists(newFile)) {
-                
+                var directory = new DirectoryInfo(exFile).GetFiles();
+
                 foreach (var file in directory)
                 {
                     if (Regex.IsMatch(file.Name, dashboardID + "_"))
