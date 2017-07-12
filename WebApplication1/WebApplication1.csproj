@@ -170,6 +170,7 @@
     <Compile Include="Models\Fullscreen.cs" />
     <Compile Include="Models\Preview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Dashboard.cs" />
     <Compile Include="Services\HashCache.cs" />
     <Compile Include="Services\StreamTest.cs" />
   </ItemGroup>
@@ -182,8 +183,6 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\img\Edit.svg" />
-    <Content Include="Content\img\View.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -254,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

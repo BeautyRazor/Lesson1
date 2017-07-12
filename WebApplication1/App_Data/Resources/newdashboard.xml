@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="New Dashboard" />
+  <Title Text="myDashboard" />
   <DataSources>
     <ExcelDataSource Name="Data Source 1" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards\sof16.csv" ComponentName="excelDataSource1">
       <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
@@ -77,45 +77,4 @@
       </ResultSchema>
     </ExcelDataSource>
   </DataSources>
-  <Items>
-    <ChoroplethMap ComponentName="choroplethMapDashboardItem1" Name="Choropleth Map 1" DataSource="excelDataSource1" AttributeName="NAME">
-      <DataItems>
-        <Measure DataMember="country" SummaryType="Count" DefaultId="DataItem1" />
-        <Dimension DataMember="country" DefaultId="DataItem0" />
-        <Measure DataMember="agree_alcohol" SummaryType="Count" DefaultId="DataItem2" />
-      </DataItems>
-      <ViewArea TopLatitude="85.25336083468207" BottomLatitude="-58.31308708972368" CenterPointLatitude="48.170584473963025" CenterPointLongitude="7.4983706985048117" CreateViewerPaddings="false" />
-      <MapLegend />
-      <WeightedLegend />
-      <AttributeDimension DefaultId="DataItem0" />
-      <Maps>
-        <ValueMap>
-          <Value DefaultId="DataItem1" />
-          <UniformScale />
-        </ValueMap>
-        <ValueMap>
-          <Value DefaultId="DataItem2" />
-          <UniformScale />
-        </ValueMap>
-      </Maps>
-    </ChoroplethMap>
-    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="excelDataSource1">
-      <DataItems>
-        <Measure DataMember="agree_adblocker" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="agree_adblocker" DefaultId="DataItem1" />
-      </DataItems>
-      <Arguments>
-        <Argument DefaultId="DataItem1" />
-      </Arguments>
-      <Values>
-        <Value DefaultId="DataItem0" />
-      </Values>
-    </Pie>
-  </Items>
-  <LayoutTree>
-    <LayoutGroup Weight="100">
-      <LayoutItem DashboardItem="choroplethMapDashboardItem1" Weight="104.20586607636967" />
-      <LayoutItem DashboardItem="pieDashboardItem1" Weight="95.794133923630312" />
-    </LayoutGroup>
-  </LayoutTree>
 </Dashboard>

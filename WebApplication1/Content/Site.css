@@ -87,6 +87,22 @@ textarea {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.add-button {
+    position: absolute;
+    height: 30%;
+    width: 30%;
+    opacity: 0.35;
+    transition: .5s ease;
+}
+
+.add-button:hover {
+    box-shadow: 
+        0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+        0 6px 20px 10px rgba(0, 0, 0, 0.19);
+    transform: translateY(-5px);
+    opacity: 1;
+}
+
 .icon {
     position: relative;
     top: calc(50% - 20px);
@@ -115,10 +131,6 @@ textarea {
     .overlay-button-top-right:hover #View {
         fill: white;
     }
-
-.overlay-button-top-left:hover {
-    background-color: darkblue;
-}
 
 .text {
     color: black;

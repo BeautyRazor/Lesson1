@@ -16,11 +16,18 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult Fullscreen(string dashboardid = "dashboard1", string dashboardMode = "viewer")
+        public ActionResult Fullscreen(string dashboardid = "default", string dashboardMode = "designer", string isNewDashboard = "false")
         {
-            var goToFullscreen = new Models.Fullscreen();
+            var goToFullscreen = new Models.Fullscreen()
+            {
+                currentDashboardId = dashboardid
+            };
+            
+            if(isNewDashboard == "true")
+            {
+                goToFullscreen.currentDashboardId = Services.Dashboard.Add();
+            }
 
-            goToFullscreen.currentDashboardId = dashboardid;
             switch (dashboardMode)
             {
                 case "designer":
@@ -43,7 +50,7 @@ namespace WebApplication1.Controllers
 
             var dasboards = new Models.Preview();
             
-            string dashboardsPath = @"~\App_Data";
+            string dashboardsPath = @"~\App_Data\Dashboards";
             //string thumbnailsPath = @"~\Content\img";
 
             //var serviceTest = new Services.StreamTest();
@@ -52,7 +59,7 @@ namespace WebApplication1.Controllers
 
             //serviceTest.Export(storage, thumbnailsPath);
 
-            dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(@"~\App_Data\Dashboards\")).GetFiles().Length;
+            dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(dashboardsPath)).GetFiles().Length;
             dasboards.Dashboards = (storage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
 
             return View(dasboards);
@@ -80,7 +87,7 @@ namespace WebApplication1.Controllers
         public ActionResult Image(string id)
         {
             string thumbnailsPath = @"~\Content\img\";
-            string dashboardPath = @"~\App_Data\";
+            string dashboardPath = @"~\App_Data\Dashboards\";
 
             var extension = "png";
 

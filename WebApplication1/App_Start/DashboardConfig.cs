@@ -26,7 +26,7 @@ namespace WebApplication1
 
            
             ExcelDataSource excelDataSource = new ExcelDataSource();
-            excelDataSource.FileName = HostingEnvironment.MapPath(@"~/App_Data/Dashboards/sof16.csv");
+            excelDataSource.FileName = HostingEnvironment.MapPath(@"~/App_Data/Resources/sof16.csv");
             //ExcelWorksheetSettings worksheetSettings = new ExcelWorksheetSettings("SalesPerson", "A1:L2000");
             var options = new CsvSourceOptions();
             options.NewlineType = CsvNewlineType.LF;
@@ -41,7 +41,7 @@ namespace WebApplication1
 
             //var aspx = new ASPxDashboard();
             //aspx.SetDataSourceStorage(dataSourceStorage);
-            DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/"));
+            DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/Dashboards/"));
             DashboardConfigurator.Default.SetDataSourceStorage(dataSourceStorage);
 
             

@@ -15,5 +15,8 @@ namespace WebApplication1.Models
         public int DashboardCount { get; set; }
 
         public string DashboardImagePath { get; } = "/Content/img/";
+
+        public string NewDashboardName { get; set; }
+
     }
 }

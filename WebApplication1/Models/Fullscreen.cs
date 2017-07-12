@@ -11,5 +11,7 @@ namespace WebApplication1.Models
         public string currentDashboardId { get; set; }
 
         public WorkingMode currentDashboardMode { get; set; }
+
+        public string currentDashboardName { get; set; }
     }
 }

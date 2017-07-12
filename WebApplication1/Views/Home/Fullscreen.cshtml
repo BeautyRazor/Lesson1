@@ -35,14 +35,16 @@
 </head>
 <body>
     <div id="#Dashboard" style="position: absolute; left: 0; right: 0; top:0; bottom:0;">
-        @Html.DevExpress().Dashboard(settings =>
+    @{
+        Html.DevExpress().Dashboard(settings =>
         {
-            settings.Name = "Dashboard";
             settings.InitialDashboardId = Model.currentDashboardId;
+            settings.Name = "Dashboard";
             settings.Width = new System.Web.UI.WebControls.Unit("100%");
             settings.Height = new System.Web.UI.WebControls.Unit("100%");
             settings.WorkingMode = Model.currentDashboardMode;
-         }).GetHtml()
+        }).GetHtml();
+    }
     </div>
 </body>
 </html>
