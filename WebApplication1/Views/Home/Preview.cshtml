@@ -12,10 +12,17 @@
         }
 
         function getDashboardName() {
-            document.getElementById('Name').value = ("#dname").val();
-            //alert(NewDashboardName);
-            //Model.NewDashboardName = name;
+            name = $("#name").val()
+            $.post(
+                "/api/post/" + name,
+                onAjaxSuccess
+            );
         }
+
+            function onAjaxSuccess(data) {
+                // Здесь мы получаем данные, отправленные сервером и выводим их на экран.
+                alert(data);
+            }
     </script>
 </head>
 
@@ -23,12 +30,12 @@
     @*Html.Hidden("Name", Model.NewDashboardName);*@
     <div class="text-center">
         <h2>Dashboard list</h2>
-
                 <div style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap" align="center">
-                    <button type="button">
-
-                    </button>
-                    @*<!-- Modal -->
+                   @{
+                       using (Html.BeginForm("Post", "WebAPI", FormMethod.Post))
+                       {
+                         
+                    <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
 
@@ -39,23 +46,25 @@
                                     <h4 class="modal-title">Modal Header</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <input id="dname" type="text" class="form-control"/>
+                                    <input type="text" class="form-control" id="name"/>
+                                    @*<input id="dname" type="text" class="form-control"/>*@
                                 </div>
                                 <div class="modal-footer">
-                                    <a target="_blank" onclick="getDashboardName()" role="button" class="btn btn-default" href="~/Home/Fullscreen">
+                                    <button role="button" class="btn btn-default" onclick="getDashboardName()">
                                         Submit
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                    
 
                         </div>
                     </div>
-                    <!-- Modal -->*@
+                    <!-- Modal -->
+                           }
+                       }
 
-                    
                     <a 
-                       href="~/Home/Fullscreen?isNewDashboard=true" 
+                       data-toggle="modal" href="#myModal" 
                        class="add-button shadow-div dashboard-thumbl-container p-2" style="width: 466px; height:316px" >
 
                         <!--
@@ -84,12 +93,12 @@
                                             <img class="download-animation" id="@item.ID" load-src="~/Home/Image/@item.ID" src="~/Content/animation/Rolling.svg" width="450" height="300" alt="@item.ID" />
 
                                         </div>
-                                        <img id="@item.ID" onload="imgOnLoad(this)" src="~/Home/Image/@item.ID" width="450" height="300" alt=@item.ID style="display:block;" />
+                                        <img id="@item.ID" onload="imgOnLoad(this)" src="~/Home/Image?dashboardidt=@item.ID" width="450" height="300" alt=@item.ID style="display:block;" />
 
                                         <div class="overlay-manage" style="z-index:100">
 
                                             <div class="overlay"></div>
-                                            <a target="_blank" href="~/Home/Fullscreen?dashboardid=@item.ID&dashboardMode=designer">
+                                            <a target="_blank" href="~/Home/Fullscreen/@item.ID/designer">
                                                 <div id="EditButton" class="overlay-button-top-left">
                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                          width="35%" height="auto" viewBox="0 0 528.899 528.899" style="enable-background:new 0 0 528.899 528.899; "

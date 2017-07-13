@@ -14,7 +14,7 @@ namespace WebApplication1
     {
         public static void RegisterService(RouteCollection routes)
         {
-            routes.MapDashboardRoute();
+            routes.MapDashboardRoute("asd");
 
             // Uncomment this line to save dashboards to the App_Data folder.
             //DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/"));

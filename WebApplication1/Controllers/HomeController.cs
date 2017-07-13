@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -15,18 +16,13 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
-        public ActionResult Fullscreen(string dashboardid = "default", string dashboardMode = "designer", string isNewDashboard = "false")
+           
+        public ActionResult Fullscreen(string dashboardidt = "default", string dashboardMode = "designer")
         {
-            var goToFullscreen = new Models.Fullscreen()
+            var goToFullscreen = new Fullscreen()
             {
-                currentDashboardId = dashboardid
+                currentDashboardId = dashboardidt
             };
-            
-            if(isNewDashboard == "true")
-            {
-                goToFullscreen.currentDashboardId = Services.Dashboard.Add();
-            }
 
             switch (dashboardMode)
             {
@@ -48,7 +44,7 @@ namespace WebApplication1.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            var dasboards = new Models.Preview();
+            var dasboards = new Preview();
             
             string dashboardsPath = @"~\App_Data\Dashboards";
             //string thumbnailsPath = @"~\Content\img";
@@ -58,17 +54,13 @@ namespace WebApplication1.Controllers
             DashboardFileStorage storage = new DashboardFileStorage(dashboardsPath);
 
             //serviceTest.Export(storage, thumbnailsPath);
-
+            
             dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(dashboardsPath)).GetFiles().Length;
             dasboards.Dashboards = (storage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
 
             return View(dasboards);
         }
-
-        private object DirectoryInfo(string v)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public ActionResult Manager()
         {
@@ -84,7 +76,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult Image(string id)
+        public ActionResult Image(string dashboardidt)
         {
             string thumbnailsPath = @"~\Content\img\";
             string dashboardPath = @"~\App_Data\Dashboards\";
@@ -93,10 +85,10 @@ namespace WebApplication1.Controllers
 
             var cache = new Services.HashCache();
 
-            var hash = cache.CacheRequest(thumbnailsPath, dashboardPath, id, extension);
+            var hash = cache.CacheRequest(thumbnailsPath, dashboardPath, dashboardidt, extension);
 
             var dir = Server.MapPath("/Content/img");
-            var path = Path.Combine(dir, id + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
+            var path = Path.Combine(dir, dashboardidt + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
 
             return base.File(path, "image/" + extension);
         }

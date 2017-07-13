@@ -2,7 +2,7 @@
 <Dashboard>
   <Title Text="What country should choose Web-developer for work?" />
   <DataSources>
-    <ExcelDataSource Name="Data Source 1" FileName="C:\Users\Student17\Documents\Git\devex\DXWebApplication1\App_Data\Resources\sof16.csv" ComponentName="excelDataSource1">
+    <ExcelDataSource Name="Data Source 1" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\sof16.csv" ComponentName="excelDataSource1">
       <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
       <Schema />
       <ResultSchema>
