@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using System.Xml;
 using WebApplication1.Models;
 
@@ -14,25 +15,26 @@ namespace WebApplication1.Services
     {
         public static string Add(string name)
         {
-            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Resources\newdashboard.xml");
-            var dashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(@"~\App_Data\Dashboards")).GetFiles().Length;
-            string destDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + "dashboard" + (dashboardCount + 1).ToString() + ".xml");
-
-            var storage = new DashboardFileStorage(@"~\App_Data\Dashboards");
-
-            var edit = (storage as IEditableDashboardStorage).GetAvailableDashboardsInfo().ToList();
+            //string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Resources\newdashboard.xml");
+            //var dashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(@"~\App_Data\Dashboards")).GetFiles().Length;
+            //string destDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + "dashboard" + (dashboardCount + 1).ToString() + ".xml");
+            string _name = name;
+            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            //var edit = (storage as IEditableDashboardStorage).GetAvailableDashboardsInfo().ToList();
             string wrongChars = "/\\*:?| \"<>";
-
+            
             foreach(var wrong in wrongChars)
-                name.Replace(wrong, '_');
+                _name.Replace(wrong, '_');
 
             var config = new DashboardInfo()
             {
-                ID = name,
+                ID = _name,
                 Name = name
             };
-
-            edit.Add(config);
+            var dashboard = new DevExpress.DashboardCommon.Dashboard();
+            dashboard.Title.Text = name + "!!!";
+            
+            string id = storage.AddDashboard(dashboard.SaveToXDocument(), name);
 
             //XmlDocument doc = new XmlDocument();
 
@@ -45,7 +47,7 @@ namespace WebApplication1.Services
 
             //doc.Save(destDashboard);
 
-            return config.ID;
+            return id;
         }
 
         public static void Delete(string dashboardID)

@@ -6,35 +6,44 @@ using System.Web.Mvc;
 using System.Web.Http;
 using WebApplication1.Services;
 using WebApplication1.Models;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace WebApplication1.Controllers
 {
-    public class WebAPIController : Controller
+    public class WebAPIController : ApiController
     {
+
+        public class Item
+        {
+            public string ID { get; set; }
+            public string title { get; set; }
+           
+        }
+
         // POST: WebAPI/Create
         [System.Web.Http.HttpPost]
-        public ActionResult Post(string id)
+        public string Post(string id)
         {
-            var dashboard = new Preview();
-
-            if (id != null)
+            var data = new Item()
             {
-                dashboard.NewDashboardName = id;
-                //Dashboard.Add(dashboard.NewDashboardName);
-            }
+                ID = Dashboard.Add(id),
+                title = id
+            };
 
+            return new JavaScriptSerializer().Serialize(data);
+
+
+        }
+
+        [System.Web.Http.HttpGet]
+        public JsonResult Get(string id)
+        {
             return new JsonResult()
             {
                 Data = id,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        }
-
-        [System.Web.Http.HttpGet]
-        public ActionResult Get()
-        {
-                return new JsonResult() { Data = "FullscreenHome",
-                JsonRequestBehavior= JsonRequestBehavior.AllowGet};
         }
     }
 }

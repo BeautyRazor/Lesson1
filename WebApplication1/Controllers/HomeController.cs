@@ -47,13 +47,8 @@ namespace WebApplication1.Controllers
             var dasboards = new Preview();
             
             string dashboardsPath = @"~\App_Data\Dashboards";
-            //string thumbnailsPath = @"~\Content\img";
-
-            //var serviceTest = new Services.StreamTest();
 
             DashboardFileStorage storage = new DashboardFileStorage(dashboardsPath);
-
-            //serviceTest.Export(storage, thumbnailsPath);
             
             dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(dashboardsPath)).GetFiles().Length;
             dasboards.Dashboards = (storage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
@@ -91,6 +86,14 @@ namespace WebApplication1.Controllers
             var path = Path.Combine(dir, dashboardidt + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
 
             return base.File(path, "image/" + extension);
+        }
+
+        public ActionResult Partial(string dashboardidt)
+        {
+            var getPartial = new Partial();
+            getPartial.DashboardID = dashboardidt;
+
+            return View(getPartial);
         }
     }
 }

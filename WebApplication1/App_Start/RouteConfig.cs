@@ -13,11 +13,11 @@ namespace WebApplication1
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "WebAPI",
-                url: "api/{action}/{id}",
-                defaults: new { controller = "WebAPI", action = "Post", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "WebAPI",
+            //    url: "api/{action}/{id}",
+            //    defaults: new { controller = "WebAPI", id = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
                 name: "Default1",
@@ -27,8 +27,8 @@ namespace WebApplication1
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { id = UrlParameter.Optional }
+                url: "{controller}/{action}/{dashboardidt}/{dashboardMode}",
+                defaults: new { dashboardidt = UrlParameter.Optional, dashboardMode = UrlParameter.Optional }
             );
 
             routes.MapRoute(

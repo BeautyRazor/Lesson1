@@ -6,9 +6,10 @@
 @model WebApplication1.Models.Preview
 
 <head>
-    <script>
+    <script type="text/javascript">
         function imgOnLoad(element) {
             $(element).closest(".dashboard-thumbl-container").find(".download-animation").hide()
+            
         }
 
         function getDashboardName() {
@@ -17,23 +18,46 @@
                 "/api/post/" + name,
                 onAjaxSuccess
             );
+            
+        }
+        
+        function onAjaxSuccess(data) {
+            // Здесь мы получаем данные, отправленные сервером и выводим их на экран.
+            var item = JSON.parse(data);
+            var id = item.ID;
+            getHtml(id);
         }
 
-            function onAjaxSuccess(data) {
-                // Здесь мы получаем данные, отправленные сервером и выводим их на экран.
-                alert(data);
-            }
+        function getHtml(id) {
+            $.post(
+                "/Home/Partial/" + id,
+                onAjaxSuccess1
+            );
+
+        }
+        
+        function onAjaxSuccess1(data) {
+            $("#DashStore").append(data)
+        }
+        /*
+    function displayData(response) {
+        if (response != null) {
+            $("#dasboardName").append("<h4>" + response + "</h4>")
+        }
+    }*/
     </script>
+
 </head>
 
 <body id="body">
     @*Html.Hidden("Name", Model.NewDashboardName);*@
     <div class="text-center">
-        <h2>Dashboard list</h2>
-                <div style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap" align="center">
+        <h2 id="dashboardName">Dashboard list</h2>
+        <button type="button" onclick="$('#dashboardName').append('kakashka')">Check</button>
+                <div id="DashStore" style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap" align="center">
                    @{
-                       using (Html.BeginForm("Post", "WebAPI", FormMethod.Post))
-                       {
+                       /*using (Html.BeginForm("Post", "WebAPI", FormMethod.Post))
+                       {*/
                          
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
@@ -43,14 +67,14 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
+                                    <h4 class="modal-title">Create new dashboard</h4>
                                 </div>
                                 <div class="modal-body">
                                     <input type="text" class="form-control" id="name"/>
                                     @*<input id="dname" type="text" class="form-control"/>*@
                                 </div>
                                 <div class="modal-footer">
-                                    <button role="button" class="btn btn-default" onclick="getDashboardName()">
+                                    <button id="btnGetName" role="button" class="close btn btn-default" data-dismiss="modal" onclick="getDashboardName()">
                                         Submit
                                     </button>
                                 </div>
@@ -60,7 +84,7 @@
                         </div>
                     </div>
                     <!-- Modal -->
-                           }
+                         //  }
                        }
 
                     <a 
@@ -84,6 +108,7 @@
                        
                     </a>
 
+                    
                         @{foreach (var item in Model.Dashboards)
                             {
                                 <div class="shadow-div dashboard-thumbl-container p-2">
@@ -112,7 +137,7 @@
                                              </svg>
                                                 </div>
                                             </a>
-                                            <a target="_blank" href="~/Home/Fullscreen?dashboardid=@item.ID&dashboardMode=viewer" style="z-index:100">
+                                            <a target="_blank" href="~/Home/Fullscreen/@item.ID/viewer" style="z-index:100">
                                                 <div id="ViewButton" class="overlay-button-top-right">
 
                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -131,7 +156,8 @@
                                     </div>
                                 </div>
                             }
-                        }
-                    </div>
+                          
+                                }
+                            </div>
     </div>
 </body>
