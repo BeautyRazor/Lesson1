@@ -11,7 +11,7 @@ namespace WebApplication1.Services
 {
     public class HashCache
     {
-        public string CacheRequest(string thumbnailsPath, string dashboardPath, string dashboardID, string extension)
+        public string CacheRequest(string thumbnailsPath, string dashboardPath, string dashboardID, string dashboardFileExtention)
         {
             string newFile = dashboardPath + dashboardID + "." + "xml";
 
@@ -23,7 +23,7 @@ namespace WebApplication1.Services
 
             string exFile = HostingEnvironment.MapPath(thumbnailsPath);
 
-            newFile = HostingEnvironment.MapPath(thumbnailsPath + dashboardID + "_" + hash + "." + extension);
+            newFile = HostingEnvironment.MapPath(thumbnailsPath + dashboardID + "_" + hash + "." + dashboardFileExtention);
             
             if (!File.Exists(newFile)) {
                 var directory = new DirectoryInfo(exFile).GetFiles();
@@ -38,7 +38,7 @@ namespace WebApplication1.Services
                 }
 
                 var serviceTest = new StreamTest();
-                serviceTest.Export(thumbnailsPath, dashboardID, extension, hash);
+                serviceTest.Export(thumbnailsPath, dashboardID, dashboardFileExtention, hash);
             }
 
             return hash;

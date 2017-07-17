@@ -13,12 +13,6 @@ namespace WebApplication1
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    name: "WebAPI",
-            //    url: "api/{action}/{id}",
-            //    defaults: new { controller = "WebAPI", id = UrlParameter.Optional }
-            //);
-
             routes.MapRoute(
                 name: "Default1",
                 url: "",

@@ -13,47 +13,53 @@ namespace WebApplication1.Services
 {
     public static class Dashboard
     {
-        public static string Add(string name)
+        public static string Add (string name)
         {
-            //string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Resources\newdashboard.xml");
-            //var dashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(@"~\App_Data\Dashboards")).GetFiles().Length;
-            //string destDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + "dashboard" + (dashboardCount + 1).ToString() + ".xml");
-            string _name = name;
             var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
-            //var edit = (storage as IEditableDashboardStorage).GetAvailableDashboardsInfo().ToList();
-            string wrongChars = "/\\*:?| \"<>";
-            
-            foreach(var wrong in wrongChars)
-                _name.Replace(wrong, '_');
 
-            var config = new DashboardInfo()
-            {
-                ID = _name,
-                Name = name
-            };
             var dashboard = new DevExpress.DashboardCommon.Dashboard();
-            dashboard.Title.Text = name + "!!!";
-            
             string id = storage.AddDashboard(dashboard.SaveToXDocument(), name);
-
-            //XmlDocument doc = new XmlDocument();
-
-            //doc.Load(srcDashboard);
-
-            //XmlNode root = doc.DocumentElement;
-            //XmlNode myNode = root.SelectSingleNode("Title");
-            //var attr = myNode.Attributes["Text"];
-            //attr.Value = name;
-
-            //doc.Save(destDashboard);
 
             return id;
         }
 
-        public static void Delete(string dashboardID)
+        public static string Delete (string id)
         {
-            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + dashboardID + ".xml");
+            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + id + ".xml");
             File.Delete(srcDashboard);
+
+            return id;
         }
+
+        public static string Clone (string id)
+        {
+            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+
+            var dashboard = storage.LoadDashboard(id);
+            var name = dashboard.Root.Element("Title").Attribute("Text").Value;
+
+            return storage.AddDashboard(dashboard, name); ;
+        }
+
+        public static string Clone(string id, string name)
+        {
+            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+
+            var dashboard = storage.LoadDashboard(id);
+
+            return storage.AddDashboard(dashboard, name); ;
+        }
+
+
+        private static string ReplaceWrong(string name) //for future possible self database
+        {
+            string wrongChars = "/\\*:?| \"<>";
+
+            foreach (var wrong in wrongChars)
+                name.Replace(wrong, '_');
+
+            return name;
+        }
+             
     }
 }

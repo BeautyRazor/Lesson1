@@ -18,10 +18,8 @@ namespace WebApplication1.Controllers
         {
             public string ID { get; set; }
             public string title { get; set; }
-           
         }
 
-        // POST: WebAPI/Create
         [System.Web.Http.HttpPost]
         public string Post(string id)
         {
@@ -32,18 +30,35 @@ namespace WebApplication1.Controllers
             };
 
             return new JavaScriptSerializer().Serialize(data);
-
-
         }
 
-        [System.Web.Http.HttpGet]
-        public JsonResult Get(string id)
+        [System.Web.Http.HttpPost]
+        public string Delete(string id)
         {
-            return new JsonResult()
+            var data = new Item()
             {
-                Data = id,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                ID = Dashboard.Delete(id)
             };
+
+            return new JavaScriptSerializer().Serialize(data);
+        }
+
+        [System.Web.Http.HttpPost]
+        public string Clone(string id, string name = "default")
+        {
+            var data = new Item(); 
+
+            if (name == "default")
+            {
+                data.ID = Dashboard.Clone(id);
+            }
+            else
+            {
+                data.ID = Dashboard.Clone(id, name);
+                data.title = name;
+            }
+            
+            return new JavaScriptSerializer().Serialize(data);
         }
     }
 }
