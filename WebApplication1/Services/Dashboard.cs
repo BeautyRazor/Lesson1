@@ -11,9 +11,18 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Services
 {
-    public static class Dashboard
+    public class Dashboard : DashboardFileStorage
     {
-        public static string Add (string name)
+        private string dasboardID;
+
+        public Dashboard(string id)
+        {
+            dasboardID = id;
+        }
+
+        public Dashboard() { }
+
+        public string Add (string name)
         {
             var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
 
@@ -23,35 +32,36 @@ namespace WebApplication1.Services
             return id;
         }
 
-        public static string Delete (string id)
+        public void Delete()
         {
-            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + id + ".xml");
+            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\" + dasboardID + ".xml");
             File.Delete(srcDashboard);
-
-            return id;
         }
 
-        public static string Clone (string id)
+        public string Clone()
         {
             var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
 
-            var dashboard = storage.LoadDashboard(id);
-            var name = dashboard.Root.Element("Title").Attribute("Text").Value;
+            var dashboardXML = storage.LoadDashboard(dasboardID);
+            var dashboard = new DevExpress.DashboardCommon.Dashboard();
+            dashboard.LoadFromXDocument(dashboardXML);
+
+            var name = dashboard.Title.Text;
+
+            return storage.AddDashboard(dashboardXML, name); ;
+        }
+
+        public string Clone(string name)
+        {
+            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+
+            var dashboard = storage.LoadDashboard(dasboardID);
 
             return storage.AddDashboard(dashboard, name); ;
         }
 
-        public static string Clone(string id, string name)
-        {
-            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
 
-            var dashboard = storage.LoadDashboard(id);
-
-            return storage.AddDashboard(dashboard, name); ;
-        }
-
-
-        private static string ReplaceWrong(string name) //for future possible self database
+        private string ReplaceWrong(string name) //for future possible self database
         {
             string wrongChars = "/\\*:?| \"<>";
 

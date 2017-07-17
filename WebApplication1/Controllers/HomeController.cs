@@ -6,7 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using WebApplication1.Models;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
@@ -16,26 +18,23 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-           
-        public ActionResult Fullscreen(string dashboardidt = "default", string dashboardMode = "designer")
+
+        public ActionResult Viewer(string id)
         {
             var goToFullscreen = new Fullscreen()
             {
-                currentDashboardId = dashboardidt
+                currentDashboardId = id
             };
 
-            switch (dashboardMode)
-            {
-                case "designer":
-                    goToFullscreen.currentDashboardMode = WorkingMode.Designer;
-                    break;
-                case "viewer":
-                    goToFullscreen.currentDashboardMode = WorkingMode.ViewerOnly;
-                    break;
+            return View(goToFullscreen);
+        }
 
-                default:
-                    break;
-            }
+        public ActionResult Designer(string id)
+        {
+            var goToFullscreen = new Fullscreen()
+            {
+                currentDashboardId = id
+            };
 
             return View(goToFullscreen);
         }
@@ -71,7 +70,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult Image(string dashboardidt)
+        public ActionResult Thumbnail(string id)
         {
             string thumbnailsPath = @"~\Content\img\";
             string dashboardPath = @"~\App_Data\Dashboards\";
@@ -80,20 +79,72 @@ namespace WebApplication1.Controllers
 
             var cache = new Services.HashCache();
 
-            var hash = cache.CacheRequest(thumbnailsPath, dashboardPath, dashboardidt, extension);
+            var hash = cache.CacheRequest(thumbnailsPath, dashboardPath, id, extension);
 
             var dir = Server.MapPath("/Content/img");
-            var path = Path.Combine(dir, dashboardidt + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
+            var path = Path.Combine(dir, id + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
 
             return base.File(path, "image/" + extension);
         }
 
-        public ActionResult Partial(string dashboardidt)
+        public ActionResult Partial(string id)
         {
             var getPartial = new Partial();
-            getPartial.DashboardID = dashboardidt;
+            getPartial.DashboardID = id;
 
             return View(getPartial);
+        }
+
+        public class JsonReport
+        {
+            public string ID { get; set; }
+            public string title { get; set; }
+        }
+
+        [System.Web.Http.HttpPost]
+        public string Add(string name)
+        {
+            var dashboard = new Dashboard();
+            var data = new JsonReport()
+            {
+                ID = dashboard.Add(name),
+                title = name
+            };
+
+            return new JavaScriptSerializer().Serialize(data);
+        }
+
+        [System.Web.Http.HttpPost]
+        public string Delete(string id)
+        {
+            var dashboard = new Dashboard(id);
+            dashboard.Delete();
+            var data = new JsonReport()
+            {
+                ID = id,
+                title = "DELETED"
+            };
+
+            return new JavaScriptSerializer().Serialize(data);
+        }
+
+        [System.Web.Http.HttpPost]
+        public string Clone(string id, string name = "default")
+        {
+            var dashboard = new Dashboard(id);
+            var data = new JsonReport();
+
+            if (name == "default")
+            {
+                data.ID = dashboard.Clone();
+            }
+            else
+            {
+                data.ID = dashboard.Clone(name);
+                data.title = name;
+            }
+
+            return new JavaScriptSerializer().Serialize(data);
         }
     }
 }

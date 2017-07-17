@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+@model WebApplication1.Models.Fullscreen
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Dashboard }
+    )
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.Dashboard }
+    )
+
+    <meta name="viewport" content="width=device-width" />
+
+       
+            <title>Fullscreen Viewer</title>
+      
+
+ 
+</head>
+<body>
+    <div id="#Dashboard" style="position: absolute; left: 0; right: 0; top:0; bottom:0;">
+        @{
+            Html.DevExpress().Dashboard(settings =>
+            {
+                settings.InitialDashboardId = Model.currentDashboardId;
+                settings.Name = "Dashboard";
+                settings.Width = new System.Web.UI.WebControls.Unit("100%");
+                settings.Height = new System.Web.UI.WebControls.Unit("100%");
+                settings.WorkingMode = DevExpress.DashboardWeb.WorkingMode.Viewer;
+            }).GetHtml();
+        }
+    </div>
+</body>
+</html>

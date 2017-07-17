@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Dashboard";
+    
 }
 
 @model WebApplication1.Models.Preview
@@ -12,10 +12,10 @@
             
         }
 
-        function getDashboardName() {
+        function createDashboard() {
             name = $("#name").val()
             $.post(
-                "/api/post/" + name,
+                "/Add/" + name,
                 onAjaxSuccess
             );
             
@@ -29,7 +29,7 @@
 
         function getHtml(id) {
             $.post(
-                "/Home/Partial/" + id,
+                "/" + id + "/Partial",
                 onAjaxSuccess1
             );
 
@@ -38,7 +38,28 @@
         function onAjaxSuccess1(data) {
             $("#DashStore").append(data)
         }
-       
+
+        function deleteDashboard(id) {
+            $.post(
+                "/" + id + "/delete",
+                hide
+            );
+        }
+
+
+         function hide(data) {
+            var item = JSON.parse(data);
+            var obj = document.getElementById("div_" + item.ID);
+            obj.style.display = "none";
+
+            }
+
+         function cloneDashboard(id) {
+             $.post(
+                 "/" + id + "/clone",
+                 onAjaxSuccess
+             );
+         }
     </script>
 
 </head>
@@ -50,7 +71,7 @@
         <button type="button" onclick="$('#dashboardName').append('kakashka')">Check</button>
                 <div id="DashStore" style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap" align="center">
                    @{
-                      
+
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
@@ -66,7 +87,7 @@
                                     @*<input id="dname" type="text" class="form-control"/>*@
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="btnGetName" role="button" class="close btn btn-default" data-dismiss="modal" onclick="getDashboardName()">
+                                    <button id="btnGetName" role="button" class="close btn btn-default" data-dismiss="modal" onclick="createDashboard()">
                                         Submit
                                     </button>
                                 </div>
@@ -76,9 +97,10 @@
                         </div>
                     </div>
                     <!-- Modal -->
-                     
+
                        }
 
+                    <!-- Add Button/ -->
                     <a data-toggle="modal" href="#myModal" class="add-button shadow-div dashboard-thumbl-container p-2" style="width: 466px; height:316px" >
 
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -87,56 +109,102 @@
                                 </svg>
                         
                     </a>
-
+                    <!-- /Add Button -->
                     
-                        @{foreach (var item in Model.Dashboards)
-                            {
-                                <div class="shadow-div dashboard-thumbl-container p-2">
-
-                                    <div class="container-overlay">
-                                        <div class="dashboard-thumbl-loading-div" style="position:absolute; left:0;top:0;right:0;bottom:0;">
-                                            <img class="download-animation" id="@item.ID" load-src="~/Home/Image/@item.ID" src="~/Content/animation/Rolling.svg" width="450" height="300" alt="@item.ID" />
-
-                                        </div>
-                                        <img id="@item.ID" onload="imgOnLoad(this)" src="~/Home/Image?dashboardidt=@item.ID" width="450" height="300" alt=@item.ID style="display:block;" />
-
-                                        <div class="overlay-manage" style="z-index:100">
-
-                                            <div class="overlay"></div>
-                                            <a target="_blank" href="~/Home/Fullscreen/@item.ID/designer">
-                                                <div id="EditButton" class="overlay-button-top-left">
-                                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                         width="35%" height="auto" viewBox="0 0 528.899 528.899" xml:space="preserve">
-
-                                                    <path id="Edit" d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
-		                                                       c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
-		                                                       C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
-		                                                       L27.473,390.597L0.3,512.69z" />
-
-                                             </svg>
-                                                </div>
-                                            </a>
-                                            <a target="_blank" href="~/Home/Fullscreen/@item.ID/viewer" style="z-index:100">
-                                                <div id="ViewButton" class="overlay-button-top-right">
-
-                                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                         width="35%" height="auto" viewBox="0 0 488.85 488.85" xml:space="preserve">
-
-                                                    <path id="View" d="M244.425,98.725c-93.4,0-178.1,51.1-240.6,134.1c-5.1,6.8-5.1,16.3,0,23.1c62.5,83.1,147.2,134.2,240.6,134.2
-	                                                        	s178.1-51.1,240.6-134.1c5.1-6.8,5.1-16.3,0-23.1C422.525,149.825,337.825,98.725,244.425,98.725z M251.125,347.025
-	                                                        	c-62,3.9-113.2-47.2-109.3-109.3c3.2-51.2,44.7-92.7,95.9-95.9c62-3.9,113.2,47.2,109.3,109.3
-	                                                        	C343.725,302.225,302.225,343.725,251.125,347.025z M248.025,299.625c-33.4,2.1-61-25.4-58.8-58.8c1.7-27.6,24.1-49.9,51.7-51.7
-	                                                        	c33.4-2.1,61,25.4,58.8,58.8C297.925,275.625,275.525,297.925,248.025,299.625z" />
-
-                                             </svg>
-                                                </div>
-                                            </a>
-                                        </div>
+                    @{foreach (var item in Model.Dashboards)
+                        {
+                            <div id="div_@item.ID" class="shadow-div dashboard-thumbl-container p-2" style="display:block">
+                  
+                                <div class="container-overlay">
+                  
+                                    <!-- Download animation -->
+                                    <div class="dashboard-thumbl-loading-div" style="position:absolute; left:0;top:0;right:0;bottom:0;">
+                                        <img class="download-animation" id="@item.ID" load-src="~/@item.ID/Thumbnail" src="~/Content/animation/Rolling.svg" width="450" height="300" alt="@item.ID" />
                                     </div>
+                  
+                                    <!-- Thumbnail -->
+                                    <img id="@item.ID" onload="imgOnLoad(this)" src="~/@item.ID/Thumbnail" width="450" height="300" alt=@item.ID style="display:block;" />
+                  
+                                    <!-- Button's overlay/ -->
+                                    <div class="overlay-manage" style="z-index:100">
+                  
+                                        <!-- Background -->
+                                        <div class="overlay"></div>  
+                  
+                                        <!-- Edit Button/ -->
+                                        <a target="_blank" href="~/@item.ID/designer">
+                                            <div id="EditButton" class="overlay-button-top-left">
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     width="35%" height="auto" viewBox="0 0 528.899 528.899" xml:space="preserve">
+                  
+                                                <path id="Edit" d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		                                                   c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		                                                   C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		                                                   L27.473,390.597L0.3,512.69z" />
+                  
+                                         </svg>
+                                            </div>
+                                        </a>
+                                        <!-- /Edit Button -->
+                  
+                                        <!-- View Button/ -->
+                                        <a target="_blank" href="~/@item.ID/viewer" style="z-index:100">
+                                            <div id="ViewButton" class="overlay-button-top-right">
+                  
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     width="35%" height="auto" viewBox="0 0 488.85 488.85" xml:space="preserve">
+                  
+                                                <path id="View" d="M244.425,98.725c-93.4,0-178.1,51.1-240.6,134.1c-5.1,6.8-5.1,16.3,0,23.1c62.5,83.1,147.2,134.2,240.6,134.2
+	                                                    	s178.1-51.1,240.6-134.1c5.1-6.8,5.1-16.3,0-23.1C422.525,149.825,337.825,98.725,244.425,98.725z M251.125,347.025
+	                                                    	c-62,3.9-113.2-47.2-109.3-109.3c3.2-51.2,44.7-92.7,95.9-95.9c62-3.9,113.2,47.2,109.3,109.3
+	                                                    	C343.725,302.225,302.225,343.725,251.125,347.025z M248.025,299.625c-33.4,2.1-61-25.4-58.8-58.8c1.7-27.6,24.1-49.9,51.7-51.7
+	                                                    	c33.4-2.1,61,25.4,58.8,58.8C297.925,275.625,275.525,297.925,248.025,299.625z" />
+                  
+                                         </svg>
+                                            </div>
+                                        </a>
+                                        <!-- /View Button -->
+                  
+                                        <!-- Delete Button/ -->
+                                        <div>
+                                            <div id="DeleteButton" class="overlay-button-bottom-left" onclick="deleteDashboard('@item.ID')">
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     width="35%" height="auto" viewBox="0 0 900.5 900.5" xml:space="preserve">
+
+                                                <path id="Delete" d="M176.415,880.5c0,11.046,8.954,20,20,20h507.67c11.046,0,20-8.954,20-20V232.487h-547.67V880.5L176.415,880.5z
+                                                		 M562.75,342.766h75v436.029h-75V342.766z M412.75,342.766h75v436.029h-75V342.766z M262.75,342.766h75v436.029h-75V342.766z" />
+                                                
+                                                <path id="Delete" d="M618.825,91.911V20c0-11.046-8.954-20-20-20h-297.15c-11.046,0-20,8.954-20,20v71.911v12.5v12.5H141.874
+                                                		c-11.046,0-20,8.954-20,20v50.576c0,11.045,8.954,20,20,20h34.541h547.67h34.541c11.046,0,20-8.955,20-20v-50.576
+                                                		c0-11.046-8.954-20-20-20H618.825v-12.5V91.911z M543.825,112.799h-187.15v-8.389v-12.5V75h187.15v16.911v12.5V112.799z" />
+                                                
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <!-- /Delete Button -->
+                  
+                                        <!-- Clone Button/ -->
+                                        <div>
+                                            <div id="CloneButton" class="overlay-button-bottom-right" onclick="cloneDashboard('@item.ID')">
+                                                <svg height="auto" viewBox="0 0 1792 1792" width="35%" xmlns="http://www.w3.org/2000/svg">
+                                                    <path id="Clone" d="M1664 1632v-1088q0-13-9.5-22.5t-22.5-9.5h-1088q-13 0-22.5 9.5t-9.5 22.5v1088q0 13 9.5 22.5t22.5
+                                                             9.5h1088q13 0 22.5-9.5t9.5-22.5zm128-1088v1088q0 66-47 113t-113 47h-1088q-66 0-113-47t-47-113v-1088q0-66
+                                                             47-113t113-47h1088q66 0 113 47t47 113zm-384-384v160h-128v-160q0-13-9.5-22.5t-22.5-9.5h-1088q-13 0-22.5
+                                                             9.5t-9.5 22.5v1088q0 13 9.5 22.5t22.5 9.5h160v128h-160q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1088q66
+                                                             0 113 47t47 113z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <!-- /Clone Button -->
+                  
+                                    </div>
+                                    <!-- /Button's overlay -->
+                  
                                 </div>
-                            }
-                          
-                                }
                             </div>
+                        }
+                      
+                            }
+                 </div>
     </div>
 </body>

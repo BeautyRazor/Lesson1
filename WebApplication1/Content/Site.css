@@ -87,6 +87,32 @@ textarea {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.overlay-button-bottom-right {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+    height: 30%;
+    width: 30%;
+    opacity: 1;
+    transition: .5s ease;
+    background-color: dodgerblue;
+    border-radius: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.overlay-button-bottom-left {
+    position: absolute;
+    bottom: 3%;
+    left: 3%;
+    height: 30%;
+    width: 30%;
+    opacity: 1;
+    transition: .5s ease;
+    background-color: dodgerblue;
+    border-radius: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .add-button {
     position: absolute;
     height: 30%;
@@ -119,16 +145,23 @@ textarea {
 }
 
 .overlay-button-top-right:hover,
-.overlay-button-top-left:hover {
+.overlay-button-top-left:hover,
+.overlay-button-bottom-right:hover{
     background-color: darkblue;
-    box-shadow: 
-        0 4px 8px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 10px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 10px rgba(0, 0, 0, 0.19);
     transform: translateY(-5px);
 }
 
+.overlay-button-bottom-left:hover {
+    background-color: darkred;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 10px rgba(0, 0, 0, 0.19);
+    transform: translateY(-5px);
+} 
+    
     .overlay-button-top-left:hover #Edit,
-    .overlay-button-top-right:hover #View {
+    .overlay-button-top-right:hover #View,
+    .overlay-button-bottom-right:hover #Clone,
+    .overlay-button-bottom-left:hover #Delete {
         fill: white;
     }
 

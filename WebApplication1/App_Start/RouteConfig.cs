@@ -20,15 +20,15 @@ namespace WebApplication1
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{dashboardidt}/{dashboardMode}",
-                defaults: new { dashboardidt = UrlParameter.Optional, dashboardMode = UrlParameter.Optional }
-            );
+               name: "Add",
+               url: "add/{name}",
+               defaults: new { controller = "Home", action = "Add" }
+           );
 
             routes.MapRoute(
                 name: "Dashboard",
-                url: "{dashboardidt}",
-                defaults: new { controller = "Home", action = "Fullscreen"/*, id = UrlParameter.Optional*/ }
+                url: "{id}/{action}",
+                defaults: new { controller = "Home" }
             );
         }
     }

@@ -21,30 +21,24 @@
     )
 
     <meta name="viewport" content="width=device-width" />
-    @{ 
-        if (Model.currentDashboardMode == DevExpress.DashboardWeb.WorkingMode.Designer)
-        {
+   
             <title>Fullscreen Designer</title>
-        }
-        else
-        {
-            <title>Fullscreen Viewer</title>
-        }
+        
 
-    }
+   
 </head>
 <body>
     <div id="#Dashboard" style="position: absolute; left: 0; right: 0; top:0; bottom:0;">
-    @{
-        Html.DevExpress().Dashboard(settings =>
-        {
-            settings.InitialDashboardId = Model.currentDashboardId;
-            settings.Name = "Dashboard";
-            settings.Width = new System.Web.UI.WebControls.Unit("100%");
-            settings.Height = new System.Web.UI.WebControls.Unit("100%");
-            settings.WorkingMode = Model.currentDashboardMode;
-        }).GetHtml();
-    }
+        @{
+            Html.DevExpress().Dashboard(settings =>
+            {
+                settings.InitialDashboardId = Model.currentDashboardId;
+                settings.Name = "Dashboard";
+                settings.Width = new System.Web.UI.WebControls.Unit("100%");
+                settings.Height = new System.Web.UI.WebControls.Unit("100%");
+                settings.WorkingMode = DevExpress.DashboardWeb.WorkingMode.Designer;
+            }).GetHtml();
+        }
     </div>
 </body>
 </html>
