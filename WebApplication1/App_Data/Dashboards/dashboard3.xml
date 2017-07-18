@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="Age Ranges" />
+  <Title Text="New Dashboard" />
   <DataSources>
     <ExcelDataSource Name="Data Source 1" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\sof16.csv" ComponentName="excelDataSource1">
       <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
@@ -78,22 +78,28 @@
     </ExcelDataSource>
   </DataSources>
   <Items>
-    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="excelDataSource1">
+    <Chart ComponentName="chartDashboardItem1" Name="Chart 1" DataSource="excelDataSource1">
       <DataItems>
-        <Measure DataMember="age_range" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="age_range" DefaultId="DataItem1" />
+        <Measure DataMember="agree_alcohol" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="agree_alcohol" DefaultId="DataItem1" />
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem1" />
       </Arguments>
-      <Values>
-        <Value DefaultId="DataItem0" />
-      </Values>
-    </Pie>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
   </Items>
   <LayoutTree>
     <LayoutGroup Weight="100">
-      <LayoutItem DashboardItem="pieDashboardItem1" Weight="100" />
+      <LayoutItem DashboardItem="chartDashboardItem1" Weight="100" />
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>

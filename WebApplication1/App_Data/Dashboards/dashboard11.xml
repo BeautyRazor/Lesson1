@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="New Dashboard" />
+  <Title Text="Age Ranges" />
   <DataSources>
     <ExcelDataSource Name="Data Source 1" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\sof16.csv" ComponentName="excelDataSource1">
       <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
@@ -78,22 +78,10 @@
     </ExcelDataSource>
   </DataSources>
   <Items>
-    <Treemap ComponentName="treemapDashboardItem1" Name="Treemap 1" DataSource="excelDataSource1">
-      <DataItems>
-        <Measure DataMember="agree_tech" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="agree_tech" DefaultId="DataItem1" />
-      </DataItems>
-      <Values>
-        <Value DefaultId="DataItem0" />
-      </Values>
-      <Arguments>
-        <Argument DefaultId="DataItem1" />
-      </Arguments>
-    </Treemap>
     <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="excelDataSource1">
       <DataItems>
-        <Measure DataMember="agree_mars" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="agree_mars" DefaultId="DataItem1" />
+        <Measure DataMember="age_range" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="age_range" DefaultId="DataItem1" />
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem1" />
@@ -105,7 +93,6 @@
   </Items>
   <LayoutTree>
     <LayoutGroup Weight="100">
-      <LayoutItem DashboardItem="treemapDashboardItem1" Weight="100" />
       <LayoutItem DashboardItem="pieDashboardItem1" Weight="100" />
     </LayoutGroup>
   </LayoutTree>

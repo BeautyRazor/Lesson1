@@ -24,10 +24,13 @@ namespace WebApplication1.Services
 
         public string Add (string name)
         {
-            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\");
+
+            //var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            var storage = new Services.MyDashboardFileStorage(srcDashboard);
 
             var dashboard = new DevExpress.DashboardCommon.Dashboard();
-            string id = storage.AddDashboard(dashboard.SaveToXDocument(), name);
+            string id = storage.AddDashboard( name);
 
             return id;
         }
@@ -48,7 +51,8 @@ namespace WebApplication1.Services
 
             var name = dashboard.Title.Text;
 
-            return storage.AddDashboard(dashboardXML, name); ;
+            var id = storage.AddDashboard(dashboardXML, name);
+            return id ;
         }
 
         public string Clone(string name)
@@ -61,15 +65,7 @@ namespace WebApplication1.Services
         }
 
 
-        private string ReplaceWrong(string name) //for future possible self database
-        {
-            string wrongChars = "/\\*:?| \"<>";
-
-            foreach (var wrong in wrongChars)
-                name.Replace(wrong, '_');
-
-            return name;
-        }
+       
              
     }
 }

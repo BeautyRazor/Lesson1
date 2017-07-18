@@ -7,6 +7,7 @@ using System.Linq;
 using System.IO;
 using DevExpress.DashboardCommon;
 using System.Drawing;
+using WebApplication1.Services;
 
 namespace WebApplication1
 {
@@ -37,7 +38,7 @@ namespace WebApplication1
             var dataSourceStorage = new DataSourceInMemoryStorage();
             dataSourceStorage.RegisterDataSource("excelDataSource", excelDataSource.SaveToXml());
 
-            DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/Dashboards/"));
+            DashboardConfigurator.Default.SetDashboardStorage(new MyDashboardFileStorage(@"~/App_Data/Dashboards/"));
             DashboardConfigurator.Default.SetDataSourceStorage(dataSourceStorage);
         }
     }
