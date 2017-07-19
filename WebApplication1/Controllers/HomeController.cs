@@ -10,10 +10,18 @@ using System.Web.Script.Serialization;
 using WebApplication1.Models;
 using WebApplication1.Services;
 
+
 namespace WebApplication1.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Controller // rename controller
+
     {
+        private readonly ICRUDDashboardStorage storage;
+        public HomeController()
+        {
+            storage = (ICRUDDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -44,13 +52,8 @@ namespace WebApplication1.Controllers
             ViewBag.Message = "Your application description page.";
 
             var dasboards = new Preview();
-            
-            string dashboardsPath = @"~\App_Data\Dashboards";
 
-            DashboardFileStorage storage = new DashboardFileStorage(dashboardsPath);
-            
-            dasboards.DashboardCount = new DirectoryInfo(HostingEnvironment.MapPath(dashboardsPath)).GetFiles().Length;
-            dasboards.Dashboards = (storage as IDashboardStorage).GetAvailableDashboardsInfo().ToList();
+            dasboards.Dashboards = storage.GetAvailableDashboardsInfo().ToList();
 
             return View(dasboards);
         }
@@ -104,10 +107,12 @@ namespace WebApplication1.Controllers
         [System.Web.Http.HttpPost]
         public string Add(string name)
         {
-            var dashboard = new Dashboard();
+            var dashboard = new DevExpress.DashboardCommon.Dashboard();
+
             var data = new JsonReport()
             {
-                ID = dashboard.Add(name),
+                ID = storage.AddDashboard(dashboard.SaveToXDocument(), name),
+
                 title = name
             };
 
@@ -117,11 +122,9 @@ namespace WebApplication1.Controllers
         [System.Web.Http.HttpPost]
         public string Delete(string id)
         {
-            var dashboard = new Dashboard(id);
-            dashboard.Delete();
             var data = new JsonReport()
             {
-                ID = id,
+                ID = storage.DeleteDashboard(id),
                 title = "DELETED"
             };
 
@@ -131,20 +134,23 @@ namespace WebApplication1.Controllers
         [System.Web.Http.HttpPost]
         public string Clone(string id, string name = "default")
         {
-            var dashboard = new Dashboard(id);
             var data = new JsonReport();
 
-            if (name == "default")
+            if(name == "default")
             {
-                data.ID = dashboard.Clone();
+                data.ID = storage.CloneDashboard(id);
             }
             else
             {
-                data.ID = dashboard.Clone(name);
-                data.title = name;
+                data.ID = storage.CloneDashboard(id, name);
             }
+
+            data.title = name;
 
             return new JavaScriptSerializer().Serialize(data);
         }
+
+       
+
     }
 }

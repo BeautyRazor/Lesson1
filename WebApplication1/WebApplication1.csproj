@@ -178,9 +178,9 @@
     <Compile Include="Models\Partial.cs" />
     <Compile Include="Models\Preview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Dashboard.cs" />
     <Compile Include="Services\HashCache.cs" />
-    <Compile Include="Services\MyDashboardFileStorage.cs" />
+    <Compile Include="Services\DashStore.cs" />
+    <Compile Include="Services\Interface1.cs" />
     <Compile Include="Services\StreamTest.cs" />
   </ItemGroup>
   <ItemGroup>

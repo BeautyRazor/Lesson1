@@ -15,14 +15,14 @@ namespace WebApplication1.Tests
         [Test]
         public void EmptyBaseTest()
         {
-            MyDashboardFileStorage storage = new MyDashboardFileStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
+            CRUDDashboardStorage storage = new CRUDDashboardStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
             Assert.AreEqual("dashboard1_1", storage.GenerateID("dashboard1"), "Fist test");
         }
 
         [Test]
         public void WrongName()
         {
-            var storage = new MyDashboardFileStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
+            var storage = new CRUDDashboardStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
             Assert.AreEqual("dashboard-1", storage.ReplaceWrong("dashboard_1"), "Wrong chars");
         }
 
@@ -31,7 +31,7 @@ namespace WebApplication1.Tests
         {
             //var storage = new MyDashboardFileStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
            
-            var ds = new MyDashboardFileStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
+            var ds = new CRUDDashboardStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
             Assert.AreEqual("", ds.AddDashboard(), "Wrong chars");
         }
     }
