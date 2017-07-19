@@ -4,49 +4,50 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Xml.Linq;
 
 namespace WebApplication1.Services
 {
-    public class MyDashboardFileStorage : IEditableDashboardStorage
+    public class MyDashboardFileStorage : IEditableDashboardStorage  // rename class name
     {
-        public string WorkingDirectory;
+        public string WorkingDirectory; //private fields should be named with small letter
+        // DO NOT MAKE PUBLIC FIELDS --- NEVER
         public MyDashboardFileStorage(string path)
         {
-            WorkingDirectory = path;
+            WorkingDirectory = HostingEnvironment.MapPath(path);
         }
 
-        public string AddDashboard(string dashboardName)
+        public string AddDashboard(XDocument dashboard, string name)
         {
-            var dashboard = new DevExpress.DashboardCommon.Dashboard();
-            var id = GenerateID(dashboardName);
-            dashboard.Title.Text = dashboardName;
+            var id = GenerateID(name);
+            dashboard.Root.Element("Title").Attribute("Text").Value = name; // DO it with Dashboard class
 
-            dashboard.SaveToXml(Path.Combine(WorkingDirectory, id + ".xml"));
+            dashboard.Save(Path.Combine(WorkingDirectory, id + ".xml"));
            
             return id;
         }
 
-        public List<string> GetAvaibleDashboardID()
+        public List<string> GetAvaibleDashboardsID() // make it private
         {
             var ids = new List<string>();
-            ids.
+            ids = Directory.GetFiles(WorkingDirectory, "*.xml").ToList();
 
             return ids;
         }
-        public string GenerateID(string name)
+        public string GenerateID(string name) // do not make public method only for tests!!!
         {
-            string id = ReplaceWrong(name);
+            string id = ReplaceWrong(name); // synchronize local var names ("id" and "name")
 
-            var dashboards = GetAvailableDashboardsID();
+            var dashboards = GetAvaibleDashboardsID();
             // =======
             var i = 0;
-            var dashbordName = id;
-            while (dashboards.Contains(dashbordName)) {
-                dashbordName = id  + (++i).ToString();
+            var dashboardName = id;
+            while (dashboards.Contains(dashboardName)) {
+                dashboardName = id  + (++i).ToString();
             }
 
-            id = dashbordName;
+            id = dashboardName;
 
             // =======
             //bool isContain = true;
@@ -75,13 +76,42 @@ namespace WebApplication1.Services
             return id;
         }
 
-        public string ReplaceWrong(string name) //for future possible self database
+        public string ReplaceWrong(string name)  // do not make public method only for tests!!!
         {
-            string wrongChars = "/\\*:?| \"<>_";
+            string wrongChars = "/\\*:?| \"<>_";// you can use Path.GetInvalidFileNameChars()
             foreach (var wrong in wrongChars)
                 name = name.Replace(wrong, '-');
 
             return name;
+        }
+
+      
+        public IEnumerable<DashboardInfo> GetAvailableDashboardsInfo()
+        {
+            var ids = GetAvaibleDashboardsID();
+            var info = new List<DashboardInfo>();
+
+            foreach (var item in ids) // fu fu fu. DO not you "for" when you can use LINQ
+            {
+                info.Add(new DashboardInfo
+                {
+                    ID = item,
+                    Name = item
+                });
+            }
+
+
+            return info;
+        }
+
+        public XDocument LoadDashboard(string dashboardID) // cheack if file exists
+        {
+            return XDocument.Load(Path.Combine(WorkingDirectory, dashboardID + ".xml"));
+        }
+
+        public void SaveDashboard(string dashboardID, XDocument dashboard)
+        {
+            dashboard.Save(Path.Combine(WorkingDirectory, dashboardID + ".xml"));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace WebApplication1.Tests
             //var storage = new MyDashboardFileStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
            
             var ds = new MyDashboardFileStorage(@"C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Dashboards");
-            Assert.AreEqual("", ds.AddDashboard("dashboard_1"), "Wrong chars");
+            Assert.AreEqual("", ds.AddDashboard(), "Wrong chars");
         }
     }
 }

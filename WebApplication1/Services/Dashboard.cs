@@ -24,13 +24,13 @@ namespace WebApplication1.Services
 
         public string Add (string name)
         {
-            string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\");
+            //string srcDashboard = HostingEnvironment.MapPath(@"~\App_Data\Dashboards\");
 
-            //var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
-            var storage = new Services.MyDashboardFileStorage(srcDashboard);
+            var storage = (IEditableDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            //var storage = new Services.MyDashboardFileStorage(srcDashboard);
 
             var dashboard = new DevExpress.DashboardCommon.Dashboard();
-            string id = storage.AddDashboard( name);
+            string id = storage.AddDashboard(dashboard.SaveToXDocument(), name);
 
             return id;
         }
