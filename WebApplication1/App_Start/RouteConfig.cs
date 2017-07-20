@@ -16,19 +16,19 @@ namespace WebApplication1
             routes.MapRoute(
                 name: "Default1",
                 url: "",
-                defaults: new { controller = "Home", action = "Preview" }
+                defaults: new { controller = "DashboardManager", action = "Preview" }
             );
 
             routes.MapRoute(
                name: "Add",
                url: "add/{name}",
-               defaults: new { controller = "Home", action = "Add" }
+               defaults: new { controller = "DashboardManager", action = "Add" }
            );
 
             routes.MapRoute(
                 name: "Dashboard",
                 url: "{id}/{action}",
-                defaults: new { controller = "Home" }
+                defaults: new { controller = "DashboardManager" }
             );
         }
     }

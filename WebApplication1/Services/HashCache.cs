@@ -37,7 +37,7 @@ namespace WebApplication1.Services
                     }
                 }
 
-                var serviceTest = new StreamTest();
+                var serviceTest = new DashbordExporter();
                 serviceTest.Export(thumbnailsPath, dashboardID, dashboardFileExtention, hash);
             }
 

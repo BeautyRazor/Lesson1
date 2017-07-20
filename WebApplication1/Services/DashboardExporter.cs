@@ -11,7 +11,7 @@ using System.Web.Hosting;
 
 namespace WebApplication1.Services
 {
-    public class StreamTest
+    public class DashbordExporter
     {
         private void DeleteUnusefulFiles(string path)
         {

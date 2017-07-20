@@ -13,19 +13,22 @@ using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
-    public class HomeController : Controller // rename controller
+    public class DashboardManagerController : Controller 
 
     {
         private readonly ICRUDDashboardStorage storage;
-        public HomeController()
+
+        private class JsonReport
+        {
+            public string ID { get; set; }
+            public string Name { get; set; }
+        }
+
+        public DashboardManagerController()
         {
             storage = (ICRUDDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public ActionResult Viewer(string id)
         {
@@ -59,20 +62,6 @@ namespace WebApplication1.Controllers
         }
         
 
-        public ActionResult Manager()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Manual()
-        {
-            ViewBag.Message = "Dashboard";
-
-            return View();
-        }
-
         public ActionResult Thumbnail(string id)
         {
             string thumbnailsPath = @"~\Content\img\";
@@ -98,25 +87,17 @@ namespace WebApplication1.Controllers
             return View(getPartial);
         }
 
-        public class JsonReport
-        {
-            public string ID { get; set; }
-            public string title { get; set; }
-        }
 
         [System.Web.Http.HttpPost]
-        public string Add(string name)
+        public ActionResult Add(string name)
         {
             var dashboard = new DevExpress.DashboardCommon.Dashboard();
 
-            var data = new JsonReport()
+            return RedirectToAction("Partial", new
             {
-                ID = storage.AddDashboard(dashboard.SaveToXDocument(), name),
+                id = storage.AddDashboard(dashboard.SaveToXDocument(), name)
+            });
 
-                title = name
-            };
-
-            return new JavaScriptSerializer().Serialize(data);
         }
 
         [System.Web.Http.HttpPost]
@@ -125,29 +106,32 @@ namespace WebApplication1.Controllers
             var data = new JsonReport()
             {
                 ID = storage.DeleteDashboard(id),
-                title = "DELETED"
+                Name = "DELETED"
             };
 
             return new JavaScriptSerializer().Serialize(data);
         }
 
         [System.Web.Http.HttpPost]
-        public string Clone(string id, string name = "default")
+        public ActionResult Clone(string id, string name = "default")
         {
             var data = new JsonReport();
 
             if(name == "default")
             {
-                data.ID = storage.CloneDashboard(id);
+                return RedirectToAction("Partial", new
+                {
+                    id = storage.CloneDashboard(id)
+                });
             }
             else
             {
-                data.ID = storage.CloneDashboard(id, name);
+                return RedirectToAction("Partial", new
+                {
+                    id = storage.CloneDashboard(id, name)
+                });
             }
 
-            data.title = name;
-
-            return new JavaScriptSerializer().Serialize(data);
         }
 
        
