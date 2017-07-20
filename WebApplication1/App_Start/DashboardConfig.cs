@@ -38,7 +38,7 @@ namespace WebApplication1
             var dataSourceStorage = new DataSourceInMemoryStorage();
             dataSourceStorage.RegisterDataSource("excelDataSource", excelDataSource.SaveToXml());
 
-            DashboardConfigurator.Default.SetDashboardStorage(new CRUDDashboardStorage(@"~/App_Data/Dashboards/"));
+            DashboardConfigurator.Default.SetDashboardStorage(new CRUDDashboardStorage(HostingEnvironment.MapPath(@"~/App_Data/Dashboards/")));
             DashboardConfigurator.Default.SetDataSourceStorage(dataSourceStorage);
         }
     }

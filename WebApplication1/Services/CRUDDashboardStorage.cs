@@ -16,7 +16,7 @@ namespace WebApplication1.Services
 
         public CRUDDashboardStorage(string path)
         {
-            workingDirectory = HostingEnvironment.MapPath(path);
+            workingDirectory = path;
         }
 
         private string GenerateID(string dashboardName)
@@ -86,6 +86,8 @@ namespace WebApplication1.Services
 
         public XDocument LoadDashboard(string dashboardID) // cheack if file exists
         {
+            if (dashboardID == null) return null;
+
             var file = Path.Combine(workingDirectory, dashboardID + ".xml");
             if (File.Exists(file))
             {
@@ -98,19 +100,33 @@ namespace WebApplication1.Services
 
         public void SaveDashboard(string dashboardID, XDocument dashboard)
         {
+            //if (dashboardID == null) return null;
+
             dashboard.Save(Path.Combine(workingDirectory, dashboardID + ".xml"));
         }
 
         public string DeleteDashboard(string dashboardID) // this method should be void
         {
-            File.Delete(Path.Combine(workingDirectory, dashboardID + ".xml"));
+            if (dashboardID == null) return null;
 
-            return dashboardID;
+            var file = Path.Combine(workingDirectory, dashboardID + ".xml");
+
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+                return dashboardID;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public string CloneDashboard(string dashboardID)
         {
-            
+            if (string.IsNullOrEmpty(dashboardID)) throw new ArgumentException("dashboardID cant be null");
+
             return CloneDashboard(dashboardID, "");
         }
 
@@ -119,6 +135,8 @@ namespace WebApplication1.Services
             if (string.IsNullOrEmpty(dashboardID)) throw new ArgumentException("dashboardID cant be null");
 
             var document = LoadDashboard(dashboardID);
+
+            if (document == null) return null;
 
             if (string.IsNullOrEmpty(newDashboardName)) {
                 var dashboard = new Dashboard();
