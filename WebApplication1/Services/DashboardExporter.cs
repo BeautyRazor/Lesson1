@@ -1,13 +1,10 @@
-﻿using DevExpress.DashboardCommon;
-using DevExpress.DashboardWeb;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Web;
-using System.Security.Cryptography;
 using System.Web.Hosting;
+using DevExpress.DashboardCommon;
+using DevExpress.DashboardWeb;
+using DashboardExportImageFormat = DevExpress.DashboardCommon.DashboardExportImageFormat;
 
 namespace WebApplication1.Services
 {
@@ -15,44 +12,44 @@ namespace WebApplication1.Services
     {
         private void DeleteUnusefulFiles(string path)
         {
-            DirectoryInfo di = new DirectoryInfo(path);
-            foreach (FileInfo file in di.GetFiles())
+            var di = new DirectoryInfo(path);
+            foreach (var file in di.GetFiles())
             {
                 file.Delete();
             }
         }
-        static object lockObj = new object();
+        static object _lockObj = new object();
 
-        public void Export(string thumbnailsPath, string dashboardID, string extension, string hash)
+        public void Export(string thumbnailsPath, string dashboardId, string extension, string hash)
         {
-            ASPxDashboardExporter exporter = new ASPxDashboardExporter(DashboardConfigurator.Default);
+            var exporter = new ASPxDashboardExporter(DashboardConfigurator.Default);
 
             var path = HostingEnvironment.MapPath(thumbnailsPath);
 
-            lock (lockObj)
+            lock (_lockObj)
             {
-                string fullPath = string.Format(@"{0}\{1}_{2}.{3}", path, dashboardID, hash, extension);
-                using (FileStream fs = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                var fullPath = string.Format(@"{0}\{1}_{2}.{3}", path, dashboardId, hash, extension);
+                using (var fs = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
                     switch (extension)
                     {
                         case "png":
-                            exporter.ExportToImage(dashboardID, fs, new Size(512, 288), null, new DashboardImageExportOptions()
+                            exporter.ExportToImage(dashboardId, fs, new Size(512, 288), null, new DashboardImageExportOptions
                             {
-                                Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Png
+                                Format = DashboardExportImageFormat.Png
                             });
                             break;
                         case "jpg":
                         case "jpeg":
-                            exporter.ExportToImage(dashboardID, fs, new Size(512, 288), null, new DashboardImageExportOptions()
+                            exporter.ExportToImage(dashboardId, fs, new Size(512, 288), null, new DashboardImageExportOptions
                             {
-                                Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Jpeg
+                                Format = DashboardExportImageFormat.Jpeg
                             });
                             break;
                         case "gif":
-                            exporter.ExportToImage(dashboardID, fs, new Size(512, 288), null, new DashboardImageExportOptions()
+                            exporter.ExportToImage(dashboardId, fs, new Size(512, 288), null, new DashboardImageExportOptions
                             {
-                                Format = DevExpress.DashboardCommon.DashboardExportImageFormat.Gif
+                                Format = DashboardExportImageFormat.Gif
                             });
                             break;
                         default:

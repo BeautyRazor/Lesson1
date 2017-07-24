@@ -1,12 +1,8 @@
+using System.Web.Hosting;
 using System.Web.Routing;
 using DevExpress.DashboardWeb;
 using DevExpress.DashboardWeb.Mvc;
 using DevExpress.DataAccess.Excel;
-using System.Web.Hosting;
-using System.Linq;
-using System.IO;
-using DevExpress.DashboardCommon;
-using System.Drawing;
 using WebApplication1.Services;
 
 namespace WebApplication1
@@ -15,7 +11,7 @@ namespace WebApplication1
     {
         private static CsvSourceOptions Config()
         {
-            return new CsvSourceOptions()
+            return new CsvSourceOptions
             {
                 NewlineType = CsvNewlineType.LF,
                 UseFirstRowAsHeader = true,
@@ -27,7 +23,7 @@ namespace WebApplication1
         {
             routes.MapDashboardRoute("asd");
 
-            ExcelDataSource excelDataSource = new ExcelDataSource()
+            var excelDataSource = new ExcelDataSource
             {
                 FileName = HostingEnvironment.MapPath(@"~/App_Data/Resources/sof16.csv"),
                 SourceOptions = Config()
@@ -38,7 +34,7 @@ namespace WebApplication1
             var dataSourceStorage = new DataSourceInMemoryStorage();
             dataSourceStorage.RegisterDataSource("excelDataSource", excelDataSource.SaveToXml());
 
-            DashboardConfigurator.Default.SetDashboardStorage(new CRUDDashboardStorage(HostingEnvironment.MapPath(@"~/App_Data/Dashboards/")));
+            DashboardConfigurator.Default.SetDashboardStorage(new CrudDashboardStorage(HostingEnvironment.MapPath(@"~/App_Data/Dashboards/")));
             DashboardConfigurator.Default.SetDataSourceStorage(dataSourceStorage);
         }
     }

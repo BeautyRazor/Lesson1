@@ -3,6 +3,8 @@
     Layout = null;
 }
 
+@using System.Web.UI.WebControls
+@using DevExpress.DashboardWeb
 @model WebApplication1.Models.Fullscreen
 
 <!DOCTYPE html>
@@ -32,11 +34,11 @@
         @{
             Html.DevExpress().Dashboard(settings =>
             {
-                settings.InitialDashboardId = Model.currentDashboardId;
+                settings.InitialDashboardId = Model.CurrentDashboardId;
                 settings.Name = "Dashboard";
-                settings.Width = new System.Web.UI.WebControls.Unit("100%");
-                settings.Height = new System.Web.UI.WebControls.Unit("100%");
-                settings.WorkingMode = DevExpress.DashboardWeb.WorkingMode.Designer;
+                settings.Width = new Unit("100%");
+                settings.Height = new Unit("100%");
+                settings.WorkingMode = WorkingMode.Designer;
             }).GetHtml();
         }
     </div>

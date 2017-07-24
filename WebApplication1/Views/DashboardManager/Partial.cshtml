@@ -6,17 +6,17 @@
 @model WebApplication1.Models.Partial
 
 
-<div id="div_@Model.DashboardID" class="shadow-div dashboard-thumbl-container p-2" style="display:block">
+<div id="div_@Model.DashboardId" class="shadow-div dashboard-thumbl-container p-2" style="display:block">
                   
                                 <div class="container-overlay">
                   
                                     <!-- Download animation -->
                                     <div class="dashboard-thumbl-loading-div" style="position:absolute; left:0;top:0;right:0;bottom:0;">
-                                        <img class="download-animation" id="@Model.DashboardID" load-src=@Url.Action("Thumbnail", new { id = Model.DashboardID } ) src=@Url.Content("~/Content/animation/Rolling.svg") width="450" height="300" alt="@Model.DashboardID" />
+                                        <img class="download-animation" id="@Model.DashboardId" load-src=@Url.Action("Thumbnail", new { id = Model.DashboardId } ) src=@Url.Content("~/Content/animation/Rolling.svg") width="450" height="300" alt="@Model.DashboardId" />
                                     </div>
                   
                                     <!-- Thumbnail -->
-                                    <img id="@Model.DashboardID" onload="imgOnLoad(this)" src=@Url.Action("Thumbnail", new { id = Model.DashboardID } ) width="450" height="300" alt=@Model.DashboardID style="display:block;" />
+                                    <img id="@Model.DashboardId" onload="imgOnLoad(this)" src=@Url.Action("Thumbnail", new { id = Model.DashboardId } ) width="450" height="300" alt=@Model.DashboardId style="display:block;" />
                   
                                     <!-- Button's overlay/ -->
                                     <div class="overlay-manage" style="z-index:100">
@@ -25,7 +25,7 @@
                                         <div class="overlay"></div>  
                   
                                         <!-- Edit Button/ -->
-                                        <a target="_blank" href=@Url.Action("Designer", new { id = Model.DashboardID } )>
+                                        <a target="_blank" href=@Url.Action("Designer", new { id = Model.DashboardId } )>
                                             <div id="EditButton" class="overlay-button-top-left">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                      width="35%" height="auto" viewBox="0 0 528.899 528.899" xml:space="preserve">
@@ -41,7 +41,7 @@
                                         <!-- /Edit Button -->
                   
                                         <!-- View Button/ -->
-                                        <a target="_blank" href=@Url.Action("Viewer", new { id = Model.DashboardID } ) style="z-index:100">
+                                        <a target="_blank" href=@Url.Action("Viewer", new { id = Model.DashboardId } ) style="z-index:100">
                                             <div id="ViewButton" class="overlay-button-top-right">
                   
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -60,7 +60,7 @@
                   
                                         <!-- Delete Button/ -->
                                         <div>
-                                            <div id="DeleteButton" class="overlay-button-bottom-left" onclick="deleteDashboard( '@Url.Action( "Delete", new {id = Model.DashboardID } )' )">
+                                            <div id="DeleteButton" class="overlay-button-bottom-left" onclick="deleteDashboard( '@Url.Action( "Delete", new {id = Model.DashboardId } )' )">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                      width="35%" height="auto" viewBox="0 0 900.5 900.5" xml:space="preserve">
 
@@ -78,7 +78,7 @@
                   
                                         <!-- Clone Button/ -->
                                         <div>
-                                            <div id="CloneButton" class="overlay-button-bottom-right" onclick="cloneDashboard( '@Url.Action( "Clone", new {id = Model.DashboardID } )' )">
+                                            <div id="CloneButton" class="overlay-button-bottom-right" onclick="cloneDashboard( '@Url.Action( "Clone", new {id = Model.DashboardId } )' )">
                                                 <svg height="auto" viewBox="0 0 1792 1792" width="35%" xmlns="http://www.w3.org/2000/svg">
                                                     <path id="Clone" d="M1664 1632v-1088q0-13-9.5-22.5t-22.5-9.5h-1088q-13 0-22.5 9.5t-9.5 22.5v1088q0 13 9.5 22.5t22.5
                                                              9.5h1088q13 0 22.5-9.5t9.5-22.5zm128-1088v1088q0 66-47 113t-113 47h-1088q-66 0-113-47t-47-113v-1088q0-66

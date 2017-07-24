@@ -188,9 +188,9 @@
     <Compile Include="Models\Preview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HashCache.cs" />
-    <Compile Include="Services\CRUDDashboardStorage.cs" />
-    <Compile Include="Services\ICRUDDashboardStorag.cs" />
+    <Compile Include="Services\CrudDashboardStorage.cs" />
     <Compile Include="Services\DashboardExporter.cs" />
+    <Compile Include="Services\ICrudDashboardStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animation\download.gif" />

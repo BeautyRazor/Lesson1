@@ -1,60 +1,65 @@
-﻿using DevExpress.DashboardCommon;
-using DevExpress.DashboardWeb;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Hosting;
 using System.Xml.Linq;
+using DevExpress.DashboardCommon;
+using DevExpress.DashboardWeb;
 
 namespace WebApplication1.Services
 {
-    public class CRUDDashboardStorage : ICRUDDashboardStorage
+    public class CrudDashboardStorage : ICrudDashboardStorage
     {
-        private string workingDirectory;
+        private readonly string _workingDirectory;
+        private const string Extention = ".xml";
 
-        public CRUDDashboardStorage(string path)
+        public CrudDashboardStorage(string path)
         {
-            workingDirectory = path;
+            _workingDirectory = path;
         }
 
-        private string GenerateID(string dashboardName)
+        string GetFilePath(string id)
         {
-            string possibleDashboardID = ReplaceWrong(dashboardName);
+            return Path.Combine(_workingDirectory, id + Extention);
+        }
 
-            var dashboardIDs = GetAvaibleDashboardsID();
+        private string GenerateId(string dashboardName)
+        {
+            var possibleDashboardId = ReplaceWrong(dashboardName);
+
+            var dashboardIDs = GetAvaibleDashboardsId();
 
             var index = 0;
-            var dashboardID = possibleDashboardID;
+            var dashboardId = possibleDashboardId;
 
-            while (dashboardIDs.Contains(dashboardID))
+            while (dashboardIDs.Contains(dashboardId))
             {
-                dashboardID = possibleDashboardID + (++index).ToString();
+                dashboardId = possibleDashboardId + (++index);
             }
 
 
-            return dashboardID;
+            return dashboardId;
         }
 
-        private List<string> GetAvaibleDashboardsID()
+        private List<string> GetAvaibleDashboardsId()
         {
             return Directory
-                .GetFiles(workingDirectory, "*.xml")
+                .GetFiles(_workingDirectory, "*" + Extention)
                 .Select(Path.GetFileNameWithoutExtension)
                 .ToList();
         }
 
-        private string ReplaceWrong(string name)
+        private static string ReplaceWrong(string name)
         {
-            foreach (var wrongChar in Path.GetInvalidFileNameChars())
-                name = name.Replace(wrongChar.ToString(), string.Empty);
-            return name;
+            return Path.GetInvalidFileNameChars().Aggregate(
+                name, 
+                (current, wrongChar) => current.Replace(wrongChar.ToString(), 
+                string.Empty));
         }
 
-        private string GetNameByID(string dashboardID)
+        private string GetNameById(string dashboardId)
         {
-            var xDashboard = LoadDashboard(dashboardID);
+            var xDashboard = LoadDashboard(dashboardId);
             var dashboard = new Dashboard();
             dashboard.LoadFromXDocument(xDashboard);
 
@@ -63,86 +68,81 @@ namespace WebApplication1.Services
 
         public string AddDashboard(XDocument xDashboard, string name)
         {
-            var id = GenerateID(name);
+            var id = GenerateId(name);
 
             var dashboard = new Dashboard();
             dashboard.LoadFromXDocument(xDashboard);
 
             dashboard.Title.Text = name;
 
-            dashboard.SaveToXDocument().Save(Path.Combine(workingDirectory, id + ".xml")); // COPY_PASTE!!!! Path.Combine(workingDirectory, id + ".xml"),  ".xml" - contant
+            dashboard.SaveToXDocument().Save(GetFilePath(id)); 
 
             return id;
         }
 
         public IEnumerable<DashboardInfo> GetAvailableDashboardsInfo()
         {
-            return GetAvaibleDashboardsID()
+            return GetAvaibleDashboardsId()
                 .Select(dasbhoardId => new DashboardInfo {
                     ID = dasbhoardId,
-                    Name = GetNameByID(dasbhoardId)
+                    Name = GetNameById(dasbhoardId)
                 });
         }
 
-        public XDocument LoadDashboard(string dashboardID) // cheack if file exists
+        public XDocument LoadDashboard(string dashboardId) // cheack if file exists
         {
-            if (dashboardID == null) return null;
+            if (string.IsNullOrEmpty(dashboardId)) throw new ArgumentException("dashboardID cant be null");
 
-            var file = Path.Combine(workingDirectory, dashboardID + ".xml");
+            var file = GetFilePath(dashboardId);
             if (File.Exists(file))
             {
                 return XDocument.Load(file);
             }
-            else {
-                return null;
-            }
+            throw new FileNotFoundException("No dashboard with this id found");
         }
 
-        public void SaveDashboard(string dashboardID, XDocument dashboard)
+        public void SaveDashboard(string dashboardId, XDocument dashboard)
         {
-            //if (dashboardID == null) return null;
+            if (string.IsNullOrEmpty(dashboardId)) throw new ArgumentException("dashboardID cant be null");
+            if (dashboard == null) throw new ArgumentException("dashboardXML cant be null");
 
-            dashboard.Save(Path.Combine(workingDirectory, dashboardID + ".xml"));
+            dashboard.Save(Path.Combine(_workingDirectory, dashboardId + ".xml"));
         }
 
-        public string DeleteDashboard(string dashboardID) // this method should be void
+        public string DeleteDashboard(string dashboardId) 
         {
-            if (dashboardID == null) return null;
+            if (string.IsNullOrEmpty(dashboardId)) throw new ArgumentException("dashboardID cant be null");
 
-            var file = Path.Combine(workingDirectory, dashboardID + ".xml");
+            var file = GetFilePath(dashboardId);
 
-            if (File.Exists(file))
-            {
-                File.Delete(file);
-                return dashboardID;
-            }
-            else
-            {
-                return null;
-            }
+            if (!File.Exists(file))
+                throw new FileNotFoundException("No dashboard with this id found");
 
+            File.Delete(file);
+            return dashboardId;
         }
 
-        public string CloneDashboard(string dashboardID)
+        public string CloneDashboard(string dashboardId)
         {
-            if (string.IsNullOrEmpty(dashboardID)) throw new ArgumentException("dashboardID cant be null");
+            if (string.IsNullOrEmpty(dashboardId)) throw new ArgumentException("dashboardID cant be null");
 
-            return CloneDashboard(dashboardID, "");
+            return CloneDashboard(dashboardId, "");
         }
 
-        public string CloneDashboard(string dashboardID, string newDashboardName)
+        public string CloneDashboard(string dashboardId, string newDashboardName)
         {
-            if (string.IsNullOrEmpty(dashboardID)) throw new ArgumentException("dashboardID cant be null");
+            if (string.IsNullOrEmpty(dashboardId)) throw new ArgumentException("dashboardID cant be null");
 
-            var document = LoadDashboard(dashboardID);
+            var document = LoadDashboard(dashboardId);
 
-            if (document == null) return null;
+            if (document == null) throw new FileNotFoundException("No dashboard with this id found");
 
-            if (string.IsNullOrEmpty(newDashboardName)) {
-                var dashboard = new Dashboard();
-                dashboard.LoadFromXDocument(document);
-                newDashboardName = dashboard.Title.Text;
-            }
+            if (!string.IsNullOrEmpty(newDashboardName)) return AddDashboard(document, newDashboardName);
+
+            var dashboard = new Dashboard();
+            dashboard.LoadFromXDocument(document);
+            newDashboardName = dashboard.Title.Text;
+
             return AddDashboard(document, newDashboardName);
         }
     }

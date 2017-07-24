@@ -1,36 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Hosting;
 
 namespace WebApplication1.Services
 {
     public class HashCache
     {
-        public string CacheRequest(string thumbnailsPath, string dashboardPath, string dashboardID, string dashboardFileExtention)
+        public string CacheRequest(string thumbnailsPath, string dashboardPath, string dashboardId, string dashboardFileExtention)
         {
-            string newFile = dashboardPath + dashboardID + "." + "xml";
+            var newFile = dashboardPath + dashboardId + "." + "xml";
 
             var sha256 = SHA256.Create().ComputeHash(File.ReadAllBytes(HostingEnvironment.MapPath(newFile)));
-            string hash = "";
+            var hash = "";
 
             foreach (var h in sha256)
                 hash += h.ToString("x2");
 
-            string exFile = HostingEnvironment.MapPath(thumbnailsPath);
+            var exFile = HostingEnvironment.MapPath(thumbnailsPath);
 
-            newFile = HostingEnvironment.MapPath(thumbnailsPath + dashboardID + "_" + hash + "." + dashboardFileExtention);
+            newFile = HostingEnvironment.MapPath(thumbnailsPath + dashboardId + "_" + hash + "." + dashboardFileExtention);
             
             if (!File.Exists(newFile)) {
                 var directory = new DirectoryInfo(exFile).GetFiles();
 
                 foreach (var file in directory)
                 {
-                    if (Regex.IsMatch(file.Name, dashboardID + "_"))
+                    if (Regex.IsMatch(file.Name, dashboardId + "_"))
                     {
                         File.Delete(file.FullName);
                         break;
@@ -38,7 +34,7 @@ namespace WebApplication1.Services
                 }
 
                 var serviceTest = new DashbordExporter();
-                serviceTest.Export(thumbnailsPath, dashboardID, dashboardFileExtention, hash);
+                serviceTest.Export(thumbnailsPath, dashboardId, dashboardFileExtention, hash);
             }
 
             return hash;

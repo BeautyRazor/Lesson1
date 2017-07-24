@@ -1,40 +1,36 @@
-﻿using DevExpress.DashboardWeb;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using DevExpress.DashboardCommon;
+using DevExpress.DashboardWeb;
 using WebApplication1.Models;
 using WebApplication1.Services;
-
 
 namespace WebApplication1.Controllers
 {
     public class DashboardManagerController : Controller 
 
     {
-        private readonly ICRUDDashboardStorage storage;
+        private readonly ICrudDashboardStorage _storage;
 
         private class JsonReport
         {
-            public string ID { get; set; }
+            public string Id { get; set; }
             public string Name { get; set; }
         }
 
         public DashboardManagerController()
         {
-            storage = (ICRUDDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            _storage = (ICrudDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
         }
 
 
         public ActionResult Viewer(string id)
         {
-            var goToFullscreen = new Fullscreen()
+            var goToFullscreen = new Fullscreen
             {
-                currentDashboardId = id
+                CurrentDashboardId = id
             };
 
             return View(goToFullscreen);
@@ -42,9 +38,9 @@ namespace WebApplication1.Controllers
 
         public ActionResult Designer(string id)
         {
-            var goToFullscreen = new Fullscreen()
+            var goToFullscreen = new Fullscreen
             {
-                currentDashboardId = id
+                CurrentDashboardId = id
             };
 
             return View(goToFullscreen);
@@ -54,9 +50,8 @@ namespace WebApplication1.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            var dasboards = new Preview();
+            var dasboards = new Preview {Dashboards = _storage.GetAvailableDashboardsInfo().ToList()};
 
-            dasboards.Dashboards = storage.GetAvailableDashboardsInfo().ToList();
 
             return View(dasboards);
         }
@@ -64,25 +59,24 @@ namespace WebApplication1.Controllers
 
         public ActionResult Thumbnail(string id)
         {
-            string thumbnailsPath = @"~\Content\img\";
-            string dashboardPath = @"~\App_Data\Dashboards\";
+            var thumbnailsPath = @"~\Content\img\";
+            var dashboardPath = @"~\App_Data\Dashboards\";
 
             var extension = "png";
 
-            var cache = new Services.HashCache();
+            var cache = new HashCache();
 
             var hash = cache.CacheRequest(thumbnailsPath, dashboardPath, id, extension);
 
             var dir = Server.MapPath("/Content/img");
             var path = Path.Combine(dir, id + "_" + hash + "." + extension); //validate the path for security or use other means to generate the path.
 
-            return base.File(path, "image/" + extension);
+            return File(path, "image/" + extension);
         }
 
         public ActionResult Partial(string id)
         {
-            var getPartial = new Partial();
-            getPartial.DashboardID = id;
+            var getPartial = new Partial {DashboardId = id};
 
             return View(getPartial);
         }
@@ -91,11 +85,11 @@ namespace WebApplication1.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult Add(string name)
         {
-            var dashboard = new DevExpress.DashboardCommon.Dashboard();
+            var dashboard = new Dashboard();
 
             return RedirectToAction("Partial", new
             {
-                id = storage.AddDashboard(dashboard.SaveToXDocument(), name)
+                id = _storage.AddDashboard(dashboard.SaveToXDocument(), name)
             });
 
         }
@@ -103,9 +97,9 @@ namespace WebApplication1.Controllers
         [System.Web.Http.HttpPost]
         public string Delete(string id)
         {
-            var data = new JsonReport()
+            var data = new JsonReport
             {
-                ID = storage.DeleteDashboard(id),
+                Id = _storage.DeleteDashboard(id),
                 Name = "DELETED"
             };
 
@@ -115,23 +109,17 @@ namespace WebApplication1.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult Clone(string id, string name = "default")
         {
-            var data = new JsonReport();
-
             if(name == "default")
             {
                 return RedirectToAction("Partial", new
                 {
-                    id = storage.CloneDashboard(id)
+                    id = _storage.CloneDashboard(id)
                 });
             }
-            else
+            return RedirectToAction("Partial", new
             {
-                return RedirectToAction("Partial", new
-                {
-                    id = storage.CloneDashboard(id, name)
-                });
-            }
-
+                id = _storage.CloneDashboard(id, name)
+            });
         }
 
        

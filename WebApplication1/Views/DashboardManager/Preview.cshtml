@@ -3,10 +3,11 @@
     
 }
 
+@using RouteJs
 @model WebApplication1.Models.Preview
 
 <head>
-    <script src="@RouteJs.RouteJsHandler.HandlerUrl"></script>
+    <script src="@RouteJsHandler.HandlerUrl"></script>
     <script type="text/javascript">
         function imgOnLoad(element) {
             $(element).closest(".dashboard-thumbl-container").find(".download-animation").hide()
@@ -44,7 +45,7 @@
 
         function onAjaxSuccess(data) {
             var item = JSON.parse(data);
-            var id = item.ID;
+            var id = item.Id;
             var flag = item.Name;
             if (flag == "DELETED") {
                 hideThumbnail(id);
@@ -67,7 +68,7 @@
 
          function hideThumbnail(data) {
             var item = JSON.parse(data);
-            var obj = document.getElementById("div_" + item.ID);
+            var obj = document.getElementById("div_" + item.Id);
             obj.style.display = "none";
 
             }
@@ -99,7 +100,7 @@
                                     @*<input id="dname" type="text" class="form-control"/>*@
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="btnGetName" role="button" class="close btn btn-default" data-dismiss="modal" onclick="addDashboard( '@Url.Action( "Add" )' ) ">
+                                    <button id="btnGetName" role="button" class="close btn" data-dismiss="modal" onclick="addDashboard( '@Url.Action( "Add" )' ) ">
                                         Submit
                                     </button>
                                 </div>
@@ -125,7 +126,7 @@
                     
                     @{foreach (var item in Model.Dashboards)
                         {
-                            Html.RenderAction("Partial", new { id = item.ID });
+                            Html.RenderAction($"Partial", new { id = item.ID });
                         }
                       
                             }
