@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="What country should choose Web-developer for work?" />
+  <DataSources>
+    <ExcelDataSource Name="Excel Data Source 1" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\sof16.csv" ComponentName="dashboardExcelDataSource1">
+      <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
+      <Schema />
+      <ResultSchema />
+    </ExcelDataSource>
+  </DataSources>
+  <Parameters>
+    <Parameter Name="Parameter1" />
+  </Parameters>
+  <Items>
+    <Chart ComponentName="chartDashboardItem1" Name="Job Satisfaction" Rotated="true">
+      <DataItems>
+        <Dimension DataMember="job_satisfaction" DefaultId="DataItem1" />
+        <Measure DataMember="IndustryCorrect" SummaryType="Count" DefaultId="DataItem0" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Count" />
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <ChartLegend Visible="false" />
+    </Chart>
+    <Chart ComponentName="chartDashboardItem2" Name="Age" Rotated="true">
+      <DataItems>
+        <Measure DataMember="IndustryCorrect" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="age_range" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Count" />
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <ChartLegend Visible="false" />
+    </Chart>
+    <ChoroplethMap ComponentName="choroplethMapDashboardItem1" Name="Choropleth Map 1" ShowCaption="false" AttributeName="NAME">
+      <InteractivityOptions MasterFilterMode="Single" />
+      <DataItems>
+        <Dimension DataMember="CountryCorrect" DefaultId="DataItem0" />
+        <Measure DataMember="salary_midpoint" SummaryType="Median" DefaultId="DataItem1" />
+      </DataItems>
+      <ViewArea TopLatitude="87.766859607704646" BottomLatitude="-79.05394040325713" CenterPointLatitude="41.4474514540202" CenterPointLongitude="7.1839073164518981" CreateViewerPaddings="false" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <AttributeDimension DefaultId="DataItem0" />
+      <Maps>
+        <ValueMap>
+          <Value DefaultId="DataItem1" />
+          <UniformScale />
+        </ValueMap>
+      </Maps>
+    </ChoroplethMap>
+    <ComboBox ComponentName="comboBoxDashboardItem1" Name="Industry">
+      <DataItems>
+        <Dimension DataMember="IndustryCorrect" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ComboBox>
+    <Pie ComponentName="pieDashboardItem1" Name="Salaries" ShowPieCaptions="false">
+      <DataItems>
+        <Measure DataMember="Salaries" SummaryType="Count" DefaultId="DataItem1" />
+        <Dimension DataMember="Salaries" DefaultId="DataItem0" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Weight="100">
+      <LayoutGroup Orientation="Vertical" Weight="129.18092847127548">
+        <LayoutItem DashboardItem="choroplethMapDashboardItem1" Weight="107.45043249715235" />
+      </LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="99.115619349890324">
+        <LayoutGroup Weight="100">
+          <LayoutGroup Orientation="Vertical" Weight="100">
+            <LayoutGroup Weight="100">
+              <LayoutGroup Orientation="Vertical" Weight="100">
+                <LayoutItem DashboardItem="comboBoxDashboardItem1" Weight="100" />
+                <LayoutItem DashboardItem="pieDashboardItem1" Weight="147.48743718592962" />
+                <LayoutGroup Weight="100">
+                  <LayoutItem DashboardItem="chartDashboardItem2" Weight="80.554395802185212" />
+                  <LayoutItem DashboardItem="chartDashboardItem1" Weight="119.44560419781479" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

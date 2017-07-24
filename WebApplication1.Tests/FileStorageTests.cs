@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using DevExpress.DashboardCommon;
 using NUnit.Framework;
 using WebApplication1.Services;
@@ -11,6 +12,7 @@ namespace WebApplication1.Tests
     public class FileStorageTests
     {
         CrudDashboardStorage _storage;
+        private readonly Dashboard _testDashboard = new Dashboard();
 
         [SetUp]
         public void SetUp()
@@ -33,7 +35,7 @@ namespace WebApplication1.Tests
         [Test]
         public void AddDashboardTest()
         {
-            var testDashboard = new Dashboard();
+            var testDashboard = _testDashboard;
             var testXmlDashboard = testDashboard.SaveToXDocument();
 
             Assert.AreEqual("test", _storage.AddDashboard(testXmlDashboard, "test"), "Add test");
@@ -43,7 +45,7 @@ namespace WebApplication1.Tests
         [Test]
         public void DashboardStorageFill()
         {
-            var testDashboard = new Dashboard();
+            var testDashboard = _testDashboard;
             var testXmlDashboard = testDashboard.SaveToXDocument();
 
             Assert.AreEqual("test", _storage.AddDashboard(testXmlDashboard, "test"), "Add test");
@@ -81,7 +83,7 @@ namespace WebApplication1.Tests
         [Test]
         public void CloneTest()
         {
-            var testDashboard = new Dashboard();
+            var testDashboard = _testDashboard;
             var testXmlDashboard = testDashboard.SaveToXDocument();
 
             Assert.AreEqual("test", _storage.AddDashboard(testXmlDashboard, "test"), "Add test");
@@ -105,7 +107,6 @@ namespace WebApplication1.Tests
                 Assert.Catch(() => _storage.CloneDashboard("idThatNotExist", "testName")),
                 "No dashboard with this id found");
         }
-
 
     }
 }
