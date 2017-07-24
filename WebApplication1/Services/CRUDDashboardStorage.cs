@@ -37,7 +37,6 @@ namespace WebApplication1.Services
                 dashboardId = possibleDashboardId + (++index);
             }
 
-
             return dashboardId;
         }
 
