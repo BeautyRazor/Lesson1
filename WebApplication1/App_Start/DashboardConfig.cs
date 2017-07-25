@@ -24,33 +24,13 @@ namespace WebApplication1
 
         private static void RestoreXmlPath()
         {
-            var storage = DashboardConfigurator.Default.DashboardStorage;
-            DashboardConfigurator.Default.DataLoading += Default_DataLoading;
+            //DashboardConfigurator.Default.DataLoading += Default_DataLoading;
             DashboardConfigurator.Default.ConfigureDataConnection += Default_ConfigureDataConnection;
-
-            //for (var i = 0; i < storage.GetAvailableDashboardsInfo().Count(); i++)
-            //{
-            //    var dashboardId = storage.GetAvailableDashboardsInfo().ToArray()[i].ID;
-            //    var xmlDashboard = storage.LoadDashboard(dashboardId);
-
-            //    var dashboard = new Dashboard();
-            //    dashboard.LoadFromXDocument(xmlDashboard);
-
-            //    dashboard.DataSources[0] = new DashboardExcelDataSource
-            //    {
-            //        FileName = HostingEnvironment.MapPath(@"~/App_Data/Resources/sof16.csv"),
-            //        SourceOptions = Config()
-            //    };
-
-            //    storage.SaveDashboard(dashboardId, dashboard.SaveToXDocument());
-            //}
         }
 
         private static void Default_ConfigureDataConnection(object sender, DashboardConfigureDataConnectionEventArgs e)
-
         {
             e.ConnectionParameters = new ExcelDataSourceConnectionParameters(HostingEnvironment.MapPath(@"~/App_Data/Resources/sof16.csv"));
-           
         }
 
         private static void Default_DataLoading(object sender, DataLoadingWebEventArgs e)

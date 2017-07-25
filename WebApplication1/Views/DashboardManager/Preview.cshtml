@@ -7,6 +7,8 @@
 @model WebApplication1.Models.Preview
 
 <head>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
     <script src="@RouteJsHandler.HandlerUrl"></script>
     <script type="text/javascript">
         function imgOnLoad(element) {
@@ -66,13 +68,13 @@
             $("#DashStore").append(data)
         }
 
-         function hideThumbnail(data) {
+        function hideThumbnail(data) {
             var item = JSON.parse(data);
             var obj = document.getElementById("div_" + item.Id);
             obj.style.display = "none";
 
-            }
-        
+        }
+
     </script>
 
 </head>
