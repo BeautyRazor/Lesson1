@@ -1,4 +1,5 @@
 ﻿
+using System.Drawing;
 using DevExpress.DashboardWeb;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Hosting;
+using DevExpress.DataProcessing.InMemoryDataProcessor.Executors;
 
 namespace WebApplication1.Services
 {
@@ -40,6 +42,9 @@ namespace WebApplication1.Services
                 serviceTest.Export(thumbnailsPath, dashboardId, dashboardFileExtention, hash);
             }
 
+            var thumbnail = Image.FromFile(newFile);
+
+
             return hash;
         }
 
@@ -49,14 +54,17 @@ namespace WebApplication1.Services
             var dashboardInfo = storage.GetAvailableDashboardsInfo();
             var dirInfo = new DirectoryInfo(thumbnailsPath);
 
+            var count = dashboardInfo.Count();
+            var dashArray = dashboardInfo.ToArray();
+
             foreach (var file in dirInfo.GetFiles() )
             {
                 bool isGarbage = true;
 
                 var id = file.Name.Substring(0, file.Name.IndexOf('_'));
-                for (int index = 0; index < dashboardInfo.Count(); index++)
+                for (int index = 0; index < count; index++)
                 {
-                    if (dashboardInfo.ToArray()[index].ID == id) isGarbage = false;
+                    if (dashArray[index].ID == id) isGarbage = false;
                 }
 
                 if(isGarbage) file.Delete();

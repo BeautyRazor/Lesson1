@@ -57,10 +57,6 @@ namespace WebApplication1.Services
             );
 
 
-
-            var arr = new[] {"a", "b", "c"};
-            var st = arr.Aggregate("mama", (result, current) => result + current);
-
         }
 
         private string GetNameById(string dashboardId)

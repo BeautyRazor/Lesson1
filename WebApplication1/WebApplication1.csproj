@@ -203,13 +203,6 @@
     <Compile Include="Services\ICrudDashboardStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Dashboards\dashboard1.xml" />
-    <Content Include="App_Data\Dashboards\dashboard13.xml" />
-    <Content Include="App_Data\Dashboards\dashboard2.xml" />
-    <Content Include="App_Data\Dashboards\dashboard4.xml" />
-    <Content Include="App_Data\Dashboards\dashboard5.xml" />
-    <Content Include="App_Data\Dashboards\New Dashboard.xml" />
-    <Content Include="App_Data\Dashboards\What country should choose Web-developer for work1.xml" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\DevExpress.Charts.v17.1.Core.dll" />
