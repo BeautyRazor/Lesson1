@@ -25,6 +25,16 @@ namespace WebApplication1.Controllers
             _storage = (ICrudDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
         }
 
+        public void ResetCache()
+        {
+            var dirInfo = new DirectoryInfo(Server.MapPath("/Content/img/"));
+
+            foreach (var file in dirInfo.GetFiles())
+            {
+                
+                file.Delete();
+            }
+        }
 
         public ActionResult Viewer(string id)
         {
@@ -50,6 +60,10 @@ namespace WebApplication1.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            var thumbnailsPath = Server.MapPath("/Content/img/");
+            var cache = new HashCache();
+            cache.garbageCollect(thumbnailsPath);
+
             var dasboards = new Preview {Dashboards = _storage.GetAvailableDashboardsInfo().ToList()};
 
 
@@ -59,8 +73,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult Thumbnail(string id)
         {
-            var thumbnailsPath = @"~\Content\img\";
-            var dashboardPath = @"~\App_Data\Dashboards\";
+            var thumbnailsPath = Server.MapPath("/Content/img/");
+            var dashboardPath = Server.MapPath("/App_Data/Dashboards/");
 
             var extension = "png";
 

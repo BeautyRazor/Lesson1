@@ -1,6 +1,10 @@
-﻿using System.IO;
+﻿
+using DevExpress.DashboardWeb;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Hosting;
 
 namespace WebApplication1.Services
@@ -11,22 +15,21 @@ namespace WebApplication1.Services
         {
             var newFile = dashboardPath + dashboardId + "." + "xml";
 
-            var sha256 = SHA256.Create().ComputeHash(File.ReadAllBytes(HostingEnvironment.MapPath(newFile)));
+            var sha256 = SHA256.Create().ComputeHash(File.ReadAllBytes(newFile));
             var hash = "";
 
             foreach (var h in sha256)
                 hash += h.ToString("x2");
 
-            var exFile = HostingEnvironment.MapPath(thumbnailsPath);
 
-            newFile = HostingEnvironment.MapPath(thumbnailsPath + dashboardId + "_" + hash + "." + dashboardFileExtention);
+            newFile = thumbnailsPath + dashboardId + "_" + hash + "." + dashboardFileExtention;
             
             if (!File.Exists(newFile)) {
-                var directory = new DirectoryInfo(exFile).GetFiles();
+                var directory = new DirectoryInfo(thumbnailsPath).GetFiles();
 
                 foreach (var file in directory)
                 {
-                    if (Regex.IsMatch(file.Name, dashboardId + "_"))
+                  if (file.Name.Contains(dashboardId + "_"))
                     {
                         File.Delete(file.FullName);
                         break;
@@ -38,6 +41,27 @@ namespace WebApplication1.Services
             }
 
             return hash;
+        }
+
+        public void garbageCollect(string thumbnailsPath)
+        {
+            var storage = (ICrudDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            var dashboardInfo = storage.GetAvailableDashboardsInfo();
+            var dirInfo = new DirectoryInfo(thumbnailsPath);
+
+            foreach (var file in dirInfo.GetFiles() )
+            {
+                bool isGarbage = true;
+
+                var id = file.Name.Substring(0, file.Name.IndexOf('_'));
+                for (int index = 0; index < dashboardInfo.Count(); index++)
+                {
+                    if (dashboardInfo.ToArray()[index].ID == id) isGarbage = false;
+                }
+
+                if(isGarbage) file.Delete();
+            }
+
         }
     }
 }

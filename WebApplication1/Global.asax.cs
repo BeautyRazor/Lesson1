@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DevExpress.DashboardCommon;
+using DevExpress.Logify.Web;
 
 namespace WebApplication1
 {
@@ -17,14 +19,20 @@ namespace WebApplication1
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            DevExpress.Utils.AzureCompatibility.Enable = true;
+            DashboardExportSettings.CompatibilityMode = DashboardExportCompatibilityMode.Restricted;
+
         }
 
         public void Application_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
-            MvcApplication mvcApplication = sender as MvcApplication;
-            HttpRequest request = null;
-            if (mvcApplication != null) request = mvcApplication.Request;
+
+            LogifyAlert client = LogifyAlert.Instance;
+
+            client.ApiKey = "6A85A8CCB57E4F14945DCDC36EF1B49E";
+
+            client.Send(exc);
         }
     }
 }

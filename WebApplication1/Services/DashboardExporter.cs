@@ -24,7 +24,7 @@ namespace WebApplication1.Services
         {
             var exporter = new ASPxDashboardExporter(DashboardConfigurator.Default);
 
-            var path = HostingEnvironment.MapPath(thumbnailsPath);
+            var path = thumbnailsPath;
 
             lock (_lockObj)
             {

@@ -64,6 +64,10 @@
     <Reference Include="DevExpress.Web.Resources.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Xpo.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\DevExpress 17.1\Components\Bin\Framework\DevExpress.XtraCharts.v17.1.dll</HintPath>
+    </Reference>
     <Reference Include="Logify.Alert.Core, Version=1.0.34.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <HintPath>..\packages\Logify.Alert.Core.1.0.34\lib\net45\Logify.Alert.Core.dll</HintPath>
     </Reference>
@@ -205,7 +209,6 @@
     <Content Include="App_Data\Dashboards\dashboard4.xml" />
     <Content Include="App_Data\Dashboards\dashboard5.xml" />
     <Content Include="App_Data\Dashboards\New Dashboard.xml" />
-    <Content Include="App_Data\Dashboards\What country should choose Web-developer for work.xml" />
     <Content Include="App_Data\Dashboards\What country should choose Web-developer for work1.xml" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
@@ -492,16 +495,6 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\img\Age Ranges1_11c49eea170560cf77fe394d30a276ffe0a89139ae93275ec7a908e07e140b79.png" />
-    <Content Include="Content\img\Age Ranges_11c49eea170560cf77fe394d30a276ffe0a89139ae93275ec7a908e07e140b79.png" />
-    <Content Include="Content\img\dashboard13_849e6a1a3c2b5f1d02e94d5d11a00ef3949e9d69adeb047812c1c0299e3e91d0.png" />
-    <Content Include="Content\img\dashboard1_0b5f3fe177129784858bc8032ca7c55dc0fffabdb2733f92b9799e2ddf18d4a7.png" />
-    <Content Include="Content\img\dashboard2_0601562d5853e9b5caa709420545314bb5675e94c3e5a766b40811e33a8cb7a4.png" />
-    <Content Include="Content\img\dashboard4_9ce367e5c4abb845d1724b6369511f30fe3650bf49981f19bb867aae1d731228.png" />
-    <Content Include="Content\img\dashboard5_17cfb6946e94e4edd4189791825118d1bf71f0a77f797b645932faed6bfd7450.png" />
-    <Content Include="Content\img\New Dashboard_276945ce662f5b72e38c4b8c5e69732a1393a6e939627fbfecde9d6b17fd53c2.png" />
-    <Content Include="Content\img\What country should choose Web-developer for work1_0b5f3fe177129784858bc8032ca7c55dc0fffabdb2733f92b9799e2ddf18d4a7.png" />
-    <Content Include="Content\img\What country should choose Web-developer for work_22c06c2b903e8b34eadc2dca9543fbc25b3dfba0c223466005a1e1287d57c64f.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

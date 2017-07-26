@@ -16,6 +16,13 @@
 
         }
 
+        function resetCache(url) {
+            $.post(
+                url,
+                location.reload()
+            );
+        }
+
         function cloneDashboard(url) {
             $.post(
                 url,
@@ -83,6 +90,7 @@
     @*Html.Hidden("Name", Model.NewDashboardName);*@
     <div class="text-center">
         <h2 id="dashboardName">Dashboard list</h2>
+        <button  class="btn btn-info" onclick="resetCache( '@(Url.Action("ResetCache","DashboardManager"))' )" role="button">Reset Cache</button>
                 <div id="DashStore" style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap" align="center">
                    @{
 
@@ -102,7 +110,7 @@
                                     @*<input id="dname" type="text" class="form-control"/>*@
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="btnGetName" role="button" class="close btn" data-dismiss="modal" onclick="addDashboard( '@Url.Action( "Add" )' ) ">
+                                    <button class="close btn" data-dismiss="modal" id="btnGetName" onclick="addDashboard( '@(Url.Action("Add","DashboardManager"))' )" role="button">
                                         Submit
                                     </button>
                                 </div>

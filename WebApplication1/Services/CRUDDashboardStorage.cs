@@ -50,10 +50,17 @@ namespace WebApplication1.Services
 
         private static string ReplaceWrong(string name)
         {
-            return Path.GetInvalidFileNameChars().Aggregate(
+
+            return Path.GetInvalidFileNameChars().Concat(new [] {'\''}).Aggregate(
                 name, 
-                (current, wrongChar) => current.Replace(wrongChar.ToString(), 
-                string.Empty));
+                (current, wrongChar) => current.Replace(wrongChar.ToString(), string.Empty)
+            );
+
+
+
+            var arr = new[] {"a", "b", "c"};
+            var st = arr.Aggregate("mama", (result, current) => result + current);
+
         }
 
         private string GetNameById(string dashboardId)
