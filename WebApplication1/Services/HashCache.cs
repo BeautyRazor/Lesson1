@@ -50,12 +50,12 @@ namespace WebApplication1.Services
 
         public void garbageCollect(string thumbnailsPath)
         {
-            var storage = (ICrudDashboardStorage)DashboardConfigurator.Default.DashboardStorage;
+            var storage = DashboardConfigurator.Default.DashboardStorage;
             var dashboardInfo = storage.GetAvailableDashboardsInfo();
             var dirInfo = new DirectoryInfo(thumbnailsPath);
 
             var count = dashboardInfo.Count();
-            var dashArray = dashboardInfo.ToArray();
+            var dashboards = dashboardInfo.ToArray();
 
             foreach (var file in dirInfo.GetFiles() )
             {
@@ -64,7 +64,7 @@ namespace WebApplication1.Services
                 var id = file.Name.Substring(0, file.Name.IndexOf('_'));
                 for (int index = 0; index < count; index++)
                 {
-                    if (dashArray[index].ID == id) isGarbage = false;
+                    if (dashboards[index].ID == id) isGarbage = false;
                 }
 
                 if(isGarbage) file.Delete();

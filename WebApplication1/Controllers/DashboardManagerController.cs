@@ -60,7 +60,6 @@ namespace WebApplication1.Controllers
             return View(dasboards);
         }
         
-
         public ActionResult Thumbnail(string id)
         {
             var thumbnailsPath = Server.MapPath("/Content/img/");

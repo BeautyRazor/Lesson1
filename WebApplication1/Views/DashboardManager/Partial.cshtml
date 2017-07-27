@@ -6,7 +6,7 @@
 @model WebApplication1.Models.Partial
 
 
-<div id="div_@Model.DashboardId" class="shadow-div dashboard-thumbl-container p-2" style="display:block">
+<div id="div_@Model.DashboardId" data-title="@Model.DashboardId" class="shadow-div dashboard-thumbl-container p-2" style="display: block">
 
     <div class="container-overlay">
 
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Thumbnail -->
-        <img id="@Model.DashboardId" onload="imgOnLoad(this)" src=@Url.Action("Thumbnail", new { id = Model.DashboardId } ) width="450" height="300" alt=@Model.DashboardId style="display:block;" />
+        <img onload="imgOnLoad(this)" src=@Url.Action("Thumbnail", new { id = Model.DashboardId } ) width="450" height="300" alt=@Model.DashboardId style="display:block;" />
 
         <!-- Button's overlay/ -->
         <div class="overlay-manage" style="z-index:100">

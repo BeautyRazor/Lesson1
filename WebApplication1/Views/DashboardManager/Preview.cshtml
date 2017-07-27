@@ -1,26 +1,12 @@
 ﻿
-@{
-    
-}
-
-@using RouteJs
 @model WebApplication1.Models.Preview
 
 <head>
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-    <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
-    <script src="@RouteJsHandler.HandlerUrl"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
         function imgOnLoad(element) {
             $(element).closest(".dashboard-thumbl-container").find(".download-animation").hide()
 
-        }
-
-        function resetCache(url) {
-            $.post(
-                url,
-                location.reload()
-            );
         }
 
         function cloneDashboard(url) {
@@ -45,32 +31,6 @@
             );
         }
 
-        function post(url) {
-            $.post(
-                url,
-                onAjaxSuccess
-            );
-        }
-
-        function onAjaxSuccess(data) {
-            var item = JSON.parse(data);
-            var id = item.Id;
-            var flag = item.Name;
-            if (flag == "DELETED") {
-                hideThumbnail(id);
-            } else {
-                getHtml(post.url);
-            }
-        }
-
-        function getHtml(url) {
-            $.post(
-                url,
-                putThumbnail
-            );
-
-        }
-
         function putThumbnail(data) {
             $("#DashStore").append(data)
         }
@@ -87,58 +47,56 @@
 </head>
 
 <body id="body">
-    @*Html.Hidden("Name", Model.NewDashboardName);*@
     <div class="text-center">
-        <h2 id="dashboardName">Dashboard list</h2>
-                <div id="DashStore" style="position: absolute; left: 30px; right: 30px" class="d-flex flex-wrap" align="center">
-                   @{
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Create new dashboard</h4>
-                                </div>
-                                <div class="modal-body">
-
-                                    <input type="text" class="form-control" id="name"/>
-                                    @*<input id="dname" type="text" class="form-control"/>*@
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="close btn" data-dismiss="modal" id="btnGetName" onclick="addDashboard( '@(Url.Action("Add","DashboardManager"))' )" role="button">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                   
-
-                        </div>
-                    </div>
-                    <!-- Modal -->
-
-                       }
-
-                    <!-- Add Button/ -->
-                    <a data-toggle="modal" href="#myModal" class="add-button shadow-div dashboard-thumbl-container p-2" style="width: 466px; height:316px" >
-
-                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     width="35%" height="auto" viewBox="0 0 42 42" style="position:relative; margin:auto; enable-background:new 0 0 42 42;" xml:space="preserve">
-                                    <polygon points="42,20 22,20 22,0 20,0 20,20 0,20 0,22 20,22 20,42 22,42 22,22 42,22 " />
-                                </svg>
-                        
-                    </a>
-                    <!-- /Add Button -->
-                    
-                    @{foreach (var item in Model.Dashboards)
-                        {
-                            Html.RenderAction($"Partial", new { id = item.ID });
-                        }
-                      
-                            }
+         <div id="DashStore" style="position: relative; margin: 2%" class="d-flex flex-wrap" align="center">
+            @{
+    
+             <!-- Modal -->
+             <div class="modal fade" id="myModal" role="dialog">
+                 <div class="modal-dialog">
+    
+                     <!-- Modal content-->
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal">&times;</button>
+                             <h4 class="modal-title">Create new dashboard</h4>
+                         </div>
+                         <div class="modal-body">
+    
+                             <input type="text" class="form-control" id="name"/>
+                             @*<input id="dname" type="text" class="form-control"/>*@
+                         </div>
+                         <div class="modal-footer">
+                             <button class="close btn" data-dismiss="modal" id="btnGetName" onclick="addDashboard( '@(Url.Action("Add","DashboardManager"))' )" role="button">
+                                 Submit
+                             </button>
+                         </div>
+                     </div>
+            
+    
                  </div>
+             </div>
+             <!-- Modal -->
+    
+                }
+    
+             <!-- Add Button/ -->
+             <a data-toggle="modal" href="#myModal" class="add-button shadow-div dashboard-thumbl-container p-2" style="width: 466px; height:316px" >
+    
+                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                              width="35%" height="auto" viewBox="0 0 42 42" style="position:relative; margin:auto; enable-background:new 0 0 42 42;" xml:space="preserve">
+                             <polygon points="42,20 22,20 22,0 20,0 20,20 0,20 0,22 20,22 20,42 22,42 22,22 42,22 " />
+                         </svg>
+                 
+             </a>
+             <!-- /Add Button -->
+             
+             @{foreach (var item in Model.Dashboards)
+                 {
+                     Html.RenderAction($"Partial", new { id = item.ID });
+                 }
+               
+                     }
+          </div>
     </div>
 </body>
