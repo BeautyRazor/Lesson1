@@ -43,6 +43,17 @@ namespace WebApplication1.Services
             }
 
             var thumbnail = Image.FromFile(newFile);
+            var height = thumbnail.Height;
+            thumbnail.Dispose();
+
+
+            if (height < 100)
+            {
+                var image = Image.FromFile(HostingEnvironment.MapPath("~/Content/animation/empty.jpg"));
+
+                image = drawOverlay((Bitmap)image, dashboardId);
+                image.Save(newFile);
+            };
 
 
             return hash;
@@ -57,7 +68,7 @@ namespace WebApplication1.Services
             var count = dashboardInfo.Count();
             var dashboards = dashboardInfo.ToArray();
 
-            foreach (var file in dirInfo.GetFiles() )
+            foreach (var file in dirInfo.GetFiles())
             {
                 bool isGarbage = true;
 
@@ -67,9 +78,25 @@ namespace WebApplication1.Services
                     if (dashboards[index].ID == id) isGarbage = false;
                 }
 
-                if(isGarbage) file.Delete();
+                if (isGarbage) file.Delete();
             }
 
         }
+
+        private Bitmap drawOverlay(Bitmap image, string overlayText)
+        {
+            PointF location = new PointF(10f, 10f);
+
+            using (Graphics graphics = Graphics.FromImage(image))
+            {
+                using (Font arialFont = new Font("Arial", 80))
+                {
+                    graphics.DrawString(overlayText, arialFont, Brushes.DarkBlue, location);
+                }
+            }
+
+            return image;
+        }
+
     }
 }

@@ -481,6 +481,7 @@
     <Content Include="bin\WebApplication1.pdb" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\animation\download.gif" />
+    <Content Include="Content\animation\empty.jpg" />
     <Content Include="Content\animation\Rolling.svg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />

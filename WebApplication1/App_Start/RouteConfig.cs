@@ -18,7 +18,7 @@ namespace WebApplication1
             routes.MapRoute(
                name: "Add",
                url: "add/{name}",
-               defaults: new { controller = "DashboardManager", action = "Add" }
+               defaults: new { controller = "DashboardManager", action = "Add", name = UrlParameter.Optional }
            );
 
             routes.MapRoute(
