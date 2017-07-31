@@ -45,7 +45,7 @@ namespace WebApplication1.Controllers
 
             return View(goToFullscreen);
         }
-
+        [Authorize]
         public ActionResult Preview()
         {
             ViewBag.Message = "Your application description page.";
