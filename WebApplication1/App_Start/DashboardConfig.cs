@@ -33,10 +33,6 @@ namespace WebApplication1
             e.ConnectionParameters = new ExcelDataSourceConnectionParameters(HostingEnvironment.MapPath(@"~/App_Data/Resources/sof16.csv"));
         }
 
-        private static void Default_DataLoading(object sender, DataLoadingWebEventArgs e)
-        {
-        }
-
         public static void RegisterService(RouteCollection routes)
         {
             routes.MapDashboardRoute("asd");
@@ -48,14 +44,29 @@ namespace WebApplication1
             };
             excelDataSource.Fill();
 
+            var excelDataSource1 = new ExcelDataSource
+            {
+                FileName = HostingEnvironment.MapPath(@"~/App_Data/Resources/GLOBCSES.Final20170714.csv"),
+                SourceOptions = Config()
+            };
+            excelDataSource1.Fill();
+
+            var excelDataSource2 = new ExcelDataSource
+            {
+                FileName = HostingEnvironment.MapPath(@"~/App_Data/Resources/meteorite-landings.csv"),
+                SourceOptions = Config()
+            };
+            excelDataSource2.Fill();
 
             var dataSourceStorage = new DataSourceInMemoryStorage();
             dataSourceStorage.RegisterDataSource("excelDataSource", excelDataSource.SaveToXml());
+            dataSourceStorage.RegisterDataSource("excelDataSource1", excelDataSource1.SaveToXml());
+            dataSourceStorage.RegisterDataSource("excelDataSource2", excelDataSource2.SaveToXml());
 
             DashboardConfigurator.Default.SetDashboardStorage(new CrudDashboardStorage(HostingEnvironment.MapPath(@"~/App_Data/Dashboards/")));
             DashboardConfigurator.Default.SetDataSourceStorage(dataSourceStorage);
 
-            RestoreXmlPath();
+            //RestoreXmlPath();
         }
     }
 }

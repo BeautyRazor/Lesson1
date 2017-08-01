@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard CurrencyCulture="en-US">
-  <Title Text="Meteorite landing" />
+  <Title Text="ffdff" />
   <DataSources>
     <ExcelDataSource Name="Data Source 3" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\meteorite-landings.csv" ComponentName="excelDataSource1">
       <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
@@ -22,13 +22,24 @@
     </ExcelDataSource>
   </DataSources>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="excelDataSource1">
-      <GridOptions />
-    </Grid>
+    <BubbleMap ComponentName="bubbleMapDashboardItem1" Name="Map 1" DataSource="excelDataSource1" EnableClustering="true">
+      <DataItems>
+        <Dimension DataMember="reclat" DefaultId="DataItem0" />
+        <Dimension DataMember="reclong" DefaultId="DataItem1" />
+        <Measure DataMember="id" SummaryType="Count" DefaultId="DataItem2" />
+      </DataItems>
+      <ViewArea TopLatitude="87.1240209151142" BottomLatitude="-81.49104162755296" CenterPointLatitude="29.695475429538291" CenterPointLongitude="20.2947943940064" CreateViewerPaddings="false" />
+      <MapLegend />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem0" />
+      <Longitude DefaultId="DataItem1" />
+      <Color DefaultId="DataItem2" />
+      <UniformScale />
+    </BubbleMap>
   </Items>
   <LayoutTree>
     <LayoutGroup Weight="100">
-      <LayoutItem DashboardItem="gridDashboardItem1" Weight="100" />
+      <LayoutItem DashboardItem="bubbleMapDashboardItem1" Weight="100" />
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>
