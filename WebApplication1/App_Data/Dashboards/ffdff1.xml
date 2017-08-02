@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard CurrencyCulture="en-US">
-  <Title Text="ffdff" />
+  <Title Text="Meteorite Landings" />
   <DataSources>
     <ExcelDataSource Name="Data Source 3" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\meteorite-landings.csv" ComponentName="excelDataSource1">
       <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
@@ -19,27 +19,112 @@
           <Field Name="GeoLocation" Type="String" />
         </View>
       </ResultSchema>
+      <Filter>[reclat] &lt;&gt; ? And [reclong] &lt;&gt; ? And [mass] &lt;&gt; 0 And [reclat] &lt;&gt; 0 And [reclong] &lt;&gt; 0 And [mass] &lt;&gt; ?</Filter>
     </ExcelDataSource>
   </DataSources>
   <Items>
-    <BubbleMap ComponentName="bubbleMapDashboardItem1" Name="Map 1" DataSource="excelDataSource1" EnableClustering="true">
+    <BubbleMap ComponentName="bubbleMapDashboardItem2" Name="Meteorite by Count" ShowCaption="false" Group="groupDashboardItem2" DataSource="excelDataSource1" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="reclat" DefaultId="DataItem0" />
         <Dimension DataMember="reclong" DefaultId="DataItem1" />
         <Measure DataMember="id" SummaryType="Count" DefaultId="DataItem2" />
+        <Measure DataMember="id" SummaryType="Count" DefaultId="DataItem3" />
+        <Measure DataMember="mass" DefaultId="DataItem4" />
       </DataItems>
-      <ViewArea TopLatitude="87.1240209151142" BottomLatitude="-81.49104162755296" CenterPointLatitude="29.695475429538291" CenterPointLongitude="20.2947943940064" CreateViewerPaddings="false" />
-      <MapLegend />
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem4" />
+      </HiddenMeasures>
+      <ViewArea TopLatitude="83.645130000000009" BottomLatitude="-55.611829999999962" LeftLongitude="-179.99999999999997" CenterPointLatitude="44.089080744803773" CenterPointLongitude="1.4210854715202004E-13" />
+      <MapLegend Visible="true" />
       <WeightedLegend />
       <Latitude DefaultId="DataItem0" />
       <Longitude DefaultId="DataItem1" />
-      <Color DefaultId="DataItem2" />
+      <Weight DefaultId="DataItem2" />
+      <Color DefaultId="DataItem3" />
       <UniformScale />
     </BubbleMap>
+    <Grid ComponentName="gridDashboardItem1" Name="Heaviest meteorites" Group="groupDashboardItem1" DataSource="excelDataSource1">
+      <DataItems>
+        <Measure DataMember="mass" DefaultId="DataItem1" />
+        <Dimension DataMember="GeoLocation" TopNEnabled="true" TopNCount="8" TopNMeasure="DataItem1" DefaultId="DataItem0" />
+        <Dimension DataMember="name" DefaultId="DataItem2" />
+        <Dimension DataMember="recclass" DefaultId="DataItem3" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Weight="34.833715596330272">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Weight="31.479357798165136">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="158.6869266055046">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ShowHorizontalLines="false" WordWrap="true" />
+    </Grid>
+    <BubbleMap ComponentName="bubbleMapDashboardItem1" Name="Meteorite by Mass" ShowCaption="false" Group="groupDashboardItem1" DataSource="excelDataSource1" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="reclat" DefaultId="DataItem0" />
+        <Dimension DataMember="reclong" DefaultId="DataItem1" />
+        <Measure DataMember="mass" DefaultId="DataItem3" />
+        <Measure DataMember="mass" DefaultId="DataItem2" />
+      </DataItems>
+      <ViewArea TopLatitude="83.645130000000009" BottomLatitude="-55.611829999999962" LeftLongitude="-179.99999999999997" CenterPointLatitude="44.089080744803773" CenterPointLongitude="1.4210854715202004E-13" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem0" />
+      <Longitude DefaultId="DataItem1" />
+      <Weight DefaultId="DataItem2" />
+      <Color DefaultId="DataItem3" />
+      <UniformScale />
+    </BubbleMap>
+    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" Group="groupDashboardItem2" DataSource="excelDataSource1" PieType="Donut" LabelContentType="Argument" TooltipContentType="ValueAndPercent">
+      <DataItems>
+        <Measure DataMember="year" DefaultId="DataItem0" />
+        <Dimension DataMember="year" TopNEnabled="true" TopNShowOthers="true" TopNCount="7" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
   </Items>
+  <Groups>
+    <Group ComponentName="groupDashboardItem1" Name="Meteorites by Mass" />
+    <Group ComponentName="groupDashboardItem2" Name="Meteorites by Count" />
+  </Groups>
   <LayoutTree>
-    <LayoutGroup Weight="100">
-      <LayoutItem DashboardItem="bubbleMapDashboardItem1" Weight="100" />
+    <LayoutGroup Orientation="Vertical" Weight="100">
+      <LayoutGroup Weight="100">
+        <LayoutGroup DashboardItem="groupDashboardItem1" Weight="100">
+          <LayoutGroup Orientation="Vertical" Weight="100">
+            <LayoutGroup Weight="100">
+              <LayoutItem DashboardItem="bubbleMapDashboardItem1" Weight="100" />
+              <LayoutItem DashboardItem="gridDashboardItem1" Weight="100" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="100">
+        <LayoutGroup Weight="100">
+          <LayoutGroup Orientation="Vertical" Weight="100">
+            <LayoutGroup Weight="100">
+              <LayoutGroup DashboardItem="groupDashboardItem2" Weight="100">
+                <LayoutItem DashboardItem="bubbleMapDashboardItem2" Weight="143.46349745331071" />
+                <LayoutItem DashboardItem="pieDashboardItem1" Weight="56.536502546689292" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>
