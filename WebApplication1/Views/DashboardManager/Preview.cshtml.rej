@@ -1,9 +1,0 @@
-diff a/WebApplication1/Views/DashboardManager/Preview.cshtml b/WebApplication1/Views/DashboardManager/Preview.cshtml	(rejected hunks)
-@@ -2,7 +2,6 @@
- @model WebApplication1.Models.Preview
- 
- <head>
--    <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     <script type="text/javascript">
-         function imgOnLoad(element) {

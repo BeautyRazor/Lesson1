@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard CurrencyCulture="en-US">
+  <Title Text="Meteorite Landings" />
+  <DataSources>
+    <ExcelDataSource Name="Data Source 3" FileName="C:\Users\Student17\Documents\Git\msmvc-devex\WebApplication1\App_Data\Resources\meteorite-landings.csv" ComponentName="excelDataSource1">
+      <Options Type="DevExpress.DataAccess.Excel.CsvSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" DetectEncoding="true" DetectNewlineType="false" DetectValueSeparator="false" NewlineType="LF" TrimBlanks="true" TextQualifier="&quot;" ValueSeparator="," CultureName="" />
+      <Schema />
+      <ResultSchema>
+        <View>
+          <Field Name="name" Type="String" />
+          <Field Name="id" Type="Double" />
+          <Field Name="nametype" Type="String" />
+          <Field Name="recclass" Type="String" />
+          <Field Name="mass" Type="Double" />
+          <Field Name="fall" Type="String" />
+          <Field Name="year" Type="Double" />
+          <Field Name="reclat" Type="Double" />
+          <Field Name="reclong" Type="Double" />
+          <Field Name="GeoLocation" Type="String" />
+        </View>
+      </ResultSchema>
+      <Filter>[reclat] &lt;&gt; ? And [reclong] &lt;&gt; ? And [mass] &lt;&gt; 0 And [reclat] &lt;&gt; 0 And [reclong] &lt;&gt; 0 And [mass] &lt;&gt; ?</Filter>
+    </ExcelDataSource>
+  </DataSources>
+  <Items>
+    <BubbleMap ComponentName="bubbleMapDashboardItem2" Name="Meteorite by Count" ShowCaption="false" Group="groupDashboardItem2" DataSource="excelDataSource1" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="reclat" DefaultId="DataItem0" />
+        <Dimension DataMember="reclong" DefaultId="DataItem1" />
+        <Measure DataMember="mass" DefaultId="DataItem4" />
+        <Measure DataMember="mass" Name="Масса" DefaultId="DataItem2">
+          <NumericFormat Unit="Millions" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="id" Name="Упало" SummaryType="Count" DefaultId="DataItem3" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem4" />
+      </HiddenMeasures>
+      <ViewArea TopLatitude="82.799485797888877" BottomLatitude="-68.822915549598477" CenterPointLatitude="29.759388992383037" CenterPointLongitude="-106.83348899557579" CreateViewerPaddings="false" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem0" />
+      <Longitude DefaultId="DataItem1" />
+      <Weight DefaultId="DataItem3" />
+      <Color DefaultId="DataItem2" />
+      <UniformScale />
+    </BubbleMap>
+    <Grid ComponentName="gridDashboardItem1" Name="Heaviest meteorites" Group="groupDashboardItem1" DataSource="excelDataSource1">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Measure DataMember="mass" DefaultId="DataItem1" />
+        <Dimension DataMember="GeoLocation" TopNCount="8" TopNMeasure="DataItem1" DefaultId="DataItem0" />
+        <Dimension DataMember="name" TopNEnabled="true" TopNCount="10" TopNMeasure="DataItem1" DefaultId="DataItem2" />
+        <Dimension DataMember="recclass" DefaultId="DataItem3" />
+      </DataItems>
+      <FormatRules>
+        <GridItemFormatRule Name="Правило форматирования 1" DataItem="DataItem1" DataItemApplyTo="DataItem1">
+          <FormatConditionColorRangeBar ValueType="Percent">
+            <RangeSet>
+              <Ranges>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="0" />
+                  <BarStyleSettings PredefinedColor="PaleBlue" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="20" />
+                  <BarStyleSettings PredefinedColor="Blue" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="40" />
+                  <BarStyleSettings PredefinedColor="Green" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="60" />
+                  <BarStyleSettings PredefinedColor="Yellow" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="80" />
+                  <BarStyleSettings PredefinedColor="Red" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="80" />
+                  <BarStyleSettings PredefinedColor="Red" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Double" Value="80" />
+                  <BarStyleSettings PredefinedColor="Red" />
+                </RangeInfo>
+              </Ranges>
+            </RangeSet>
+            <BarOptions />
+          </FormatConditionColorRangeBar>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Weight="34.833715596330272">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Weight="31.479357798165136">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="158.6869266055046">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ShowHorizontalLines="false" WordWrap="true" />
+    </Grid>
+    <GeoPointMap ComponentName="geoPointMapDashboardItem1" Name="Картограмма 1" ShowCaption="false" Group="groupDashboardItem1" DataSource="excelDataSource1" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Single" />
+      <DataItems>
+        <Dimension DataMember="reclat" DefaultId="DataItem0" />
+        <Dimension DataMember="reclong" DefaultId="DataItem1" />
+        <Measure DataMember="mass" DefaultId="DataItem3" />
+        <Measure DataMember="mass" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem3" />
+      </HiddenMeasures>
+      <ViewArea TopLatitude="87.383986825263122" BottomLatitude="-80.648708133828052" CenterPointLatitude="34.298637269178343" CenterPointLongitude="-102.58392882301875" CreateViewerPaddings="false" />
+      <MapLegend />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem0" />
+      <Longitude DefaultId="DataItem1" />
+      <Value DefaultId="DataItem2" />
+    </GeoPointMap>
+    <Chart ComponentName="chartDashboardItem1" Name="График 1" ShowCaption="false" Group="groupDashboardItem2" DataSource="excelDataSource1">
+      <DataItems>
+        <Dimension DataMember="year" TopNEnabled="true" TopNCount="20" TopNMeasure="DataItem1" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Dimension>
+        <Measure DataMember="fall" SummaryType="Count" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Панель 1">
+          <AxisY Title="Упало" />
+          <Series>
+            <Simple Name="Упало">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX LimitVisiblePoints="true" />
+    </Chart>
+  </Items>
+  <Groups>
+    <Group ComponentName="groupDashboardItem1" Name="Meteorites by Mass" />
+    <Group ComponentName="groupDashboardItem2" Name="Meteorites by Count" />
+  </Groups>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical" Weight="100">
+      <LayoutGroup Weight="100">
+        <LayoutGroup DashboardItem="groupDashboardItem1" Weight="100">
+          <LayoutGroup Orientation="Vertical" Weight="100">
+            <LayoutGroup Weight="100">
+              <LayoutItem DashboardItem="geoPointMapDashboardItem1" Weight="100" />
+              <LayoutItem DashboardItem="gridDashboardItem1" Weight="100" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="100">
+        <LayoutGroup Weight="100">
+          <LayoutGroup Orientation="Vertical" Weight="100">
+            <LayoutGroup Weight="100">
+              <LayoutGroup DashboardItem="groupDashboardItem2" Weight="100">
+                <LayoutItem DashboardItem="bubbleMapDashboardItem2" Weight="126.59875495189587" />
+                <LayoutItem DashboardItem="chartDashboardItem1" Weight="73.40124504810413" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>
